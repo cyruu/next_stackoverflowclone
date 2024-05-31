@@ -4,25 +4,40 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import { Button, TextField, Typography } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 type formValues = {
   email: String;
   password: String;
 };
-
+//react toast notification
+const notify = (errmsg: String, statusCode: Number) =>
+  toast(errmsg, {
+    position: "top-center",
+    autoClose: 2500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    type: statusCode == 200 ? "success" : "error",
+    theme: "colored",
+  });
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState } = useForm<formValues>();
   const { errors } = formState;
   const submit = async (data: formValues) => {
     setLoading(true);
-    const res = await axios.post("/api/users/signup", data);
+    const res = await axios.post("/api/users/login", data);
     console.log(res.data.msg);
-
+    notify(res.data.msg, res.data.statusCode);
     setLoading(false);
   };
   return (
     <div className="h-[89vh] flex items-center justify-center">
+      <ToastContainer />
       <form
         onSubmit={handleSubmit(submit)}
         className="w-72 flex flex-col items-center"

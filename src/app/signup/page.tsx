@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LoadingButton } from "@mui/lab";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 type formValues = {
   username: String;
   email: String;
@@ -16,18 +17,19 @@ type formValues = {
 const notify = (errmsg: String, statusCode: Number) =>
   toast(errmsg, {
     position: "top-center",
-    autoClose: 2500,
+    autoClose: statusCode == 200 ? false : 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    type: statusCode == 201 ? "success" : "error",
+    type: statusCode == 200 ? "success" : "error",
     theme: "colored",
   });
 
 //component
 const Signup = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState } = useForm<formValues>();
   const { errors } = formState;
@@ -36,9 +38,14 @@ const Signup = () => {
       setLoading(true);
       const res = await axios.post("/api/users/signup", data);
       console.log(res.data);
-      setLoading(false);
 
       notify(res.data.msg, res.data.statusCode);
+      if (res.data.statusCode == 200) {
+        setTimeout(() => {
+          router.push("/login");
+        }, 1000);
+      }
+      setLoading(false);
     } catch (error: any) {
       console.log(error);
     }

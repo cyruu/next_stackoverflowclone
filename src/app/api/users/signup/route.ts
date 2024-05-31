@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       msg: "Account Created. Verify it.",
-      statusCode: 201,
+      statusCode: 200,
     });
   } catch (error: any) {
     return NextResponse.json({ msg: error });

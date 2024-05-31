@@ -89,12 +89,14 @@ function emailFormat(
 export async function sendEmailVerification({ email, id, emailType }: any) {
   try {
     const token = await bcryptjs.hash(id.toString(), 10);
+    // token is creatin g asdf/asdf/asdf so its taking to another route
+    const encodedToken = encodeURIComponent(token);
     // add this token to user in database accordint to email type
     if (emailType == verificationType.emailVerification) {
       await User.findOneAndUpdate(
         { email },
         {
-          verifyToken: token,
+          verifyToken: encodedToken,
           verifyTokenExpiry: Date.now() + 3600000,
         }
       );
@@ -107,14 +109,14 @@ export async function sendEmailVerification({ email, id, emailType }: any) {
             "Click the link below to verify your email.",
             "verifyemail",
             "Verify Email",
-            token
+            encodedToken
           )
         : emailFormat(
             "You recently requested to reset your password.",
             "Click the link below to reset your password.",
             "resetpassword",
             "Reset Password",
-            token
+            encodedToken
           );
 
     const transporter = nodemailer.createTransport({
