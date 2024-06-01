@@ -30,6 +30,7 @@ const slice = createSlice({
         state.loggedInUser = null;
       })
       .addCase(getCookieUser.fulfilled, (state, action) => {
+        console.log("user loggedin checked", action.payload);
         state.loggedInUser = action.payload;
       })
       .addCase(getCookieUser.rejected, (state) => {
