@@ -23,10 +23,13 @@ export async function POST(request: NextRequest) {
     }
     // valid user logged in
     // create a jwt token
+
+    //------------------------- id newObject form ma cha ------------------
     const jwtTokenData = {
       id: loggedInUser._id,
       username: loggedInUser.username,
     };
+
     const jwtToken = jwt.sign(jwtTokenData, process.env.JWT_SECRET_KEY!, {
       expiresIn: "1h",
     });

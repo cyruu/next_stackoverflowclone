@@ -5,12 +5,16 @@ import User from "@/app/model/UserModel";
 export async function GET(request: NextRequest) {
   try {
     //get token data
+
     const userId = getTokenData(request);
+    // userId in form of string
 
     const loggedInUser = await User.findOne(
       { _id: userId },
       { username: 1, email: 1 }
     );
+    console.log("searched user with string id", loggedInUser);
+
     if (loggedInUser) {
       return NextResponse.json({
         msg: "Logged in user found",
@@ -25,8 +29,9 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     return NextResponse.json({
-      msg: "failed getuser request",
+      msg: "something wrong in db query",
       statusCode: 404,
+      err: error,
     });
   }
 }

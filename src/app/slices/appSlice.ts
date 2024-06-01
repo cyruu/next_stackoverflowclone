@@ -5,6 +5,7 @@ export const getCookieUser = createAsyncThunk(
   "slice/cookieUser",
   async (thunkAPI) => {
     const response = await axios.get("api/users/getuser");
+    console.log("thunk resp", response);
 
     if (response.data.statusCode == 200) {
       return response.data.loggedInUser;
@@ -30,7 +31,7 @@ const slice = createSlice({
         state.loggedInUser = null;
       })
       .addCase(getCookieUser.fulfilled, (state, action) => {
-        console.log("user loggedin checked", action.payload);
+        // console.log("user loggedin checked", action.payload);
         state.loggedInUser = action.payload;
       })
       .addCase(getCookieUser.rejected, (state) => {
