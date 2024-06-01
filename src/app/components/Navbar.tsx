@@ -42,10 +42,7 @@ const Navbar = () => {
         <Image src={queryLogo} className="w-24 sm:w-32" alt={""} />
       </Link>
       <div className="searchBar flex-1 flex justify-center hidden whitespace-nowrap sm:flex">
-        <form
-          action=""
-          className="w-[60%] border border-gray-300 rounded-md py-1 px-1  "
-        >
+        <form className="w-[60%] border border-gray-300 rounded-md py-1 px-1">
           <SearchIcon className="mx-1" />
           <input type="text" className="outline-none w-[80%]" />
         </form>
