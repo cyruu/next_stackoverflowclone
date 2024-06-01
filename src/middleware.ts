@@ -6,7 +6,8 @@ export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
   // check if it is public path
   // logged in le yeta jana mildaina
-  const isPublicPath = path == "/login" || path == "/signup";
+  const isPublicPath =
+    path == "/login" || path == "/signup" || path == "/questions";
   // get token
   const loginToken = request.cookies.get("loginToken");
 
