@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
     const jwtTokenData = {
       id: loggedInUser._id,
       username: loggedInUser.username,
+      email: loggedInUser.email,
     };
 
     const jwtToken = jwt.sign(jwtTokenData, process.env.JWT_SECRET_KEY!, {

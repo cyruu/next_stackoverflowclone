@@ -5,15 +5,15 @@ import User from "@/app/model/UserModel";
 export async function GET(request: NextRequest) {
   try {
     //get token data
-
-    const userId = getTokenData(request);
+    // get email instead of _id
+    const userEmail = getTokenData(request);
     // userId in form of string
 
     const loggedInUser = await User.findOne(
-      { _id: userId },
+      { email: userEmail },
       { username: 1, email: 1 }
     );
-    console.log("searched user with string id", loggedInUser);
+    // console.log("searched user with string id", loggedInUser);
 
     if (loggedInUser) {
       return NextResponse.json({
