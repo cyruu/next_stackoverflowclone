@@ -1,10 +1,11 @@
 "use client";
-import type { Metadata } from "next";
+import { Provider } from "react-redux";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@emotion/react";
 import theme from "@/materialUI/theme";
 import Navbar from "@/app/components/Navbar";
+import { store } from "./slices/store";
 const inter = Inter({ subsets: ["latin"] });
 
 // export const metadata: Metadata = {
@@ -18,13 +19,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ThemeProvider theme={theme}>
-      <html lang="en">
-        <body className={inter.className}>
-          <Navbar />
-          {children}
-        </body>
-      </html>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <html lang="en">
+          <body className={inter.className}>
+            <Navbar />
+            {children}
+          </body>
+        </html>
+      </ThemeProvider>
+    </Provider>
   );
 }

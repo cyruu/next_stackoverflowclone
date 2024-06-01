@@ -8,12 +8,15 @@ import { ToastContainer } from "react-toastify";
 import { notify } from "@/app/helpers/notify";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { UseSelector, useDispatch } from "react-redux";
+import { setLoggedInUser } from "../slices/appSlice";
 type formValues = {
   email: String;
   password: String;
 };
 
 const Login = () => {
+  const dis = useDispatch();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState } = useForm<formValues>();
@@ -24,6 +27,7 @@ const Login = () => {
     console.log(res.data.msg);
     notify(res.data.msg, res.data.statusCode);
     setLoading(false);
+    dis(setLoggedInUser({ loggedInUser: res.data.loggedInUser }));
     if (res.data.statusCode == 200) {
       setTimeout(() => {
         router.push("/questions");
@@ -35,7 +39,7 @@ const Login = () => {
       <ToastContainer />
       <form
         onSubmit={handleSubmit(submit)}
-        className="w-96 flex flex-col items-center"
+        className="w-3/4 flex flex-col items-center sm:w-96"
       >
         <Typography variant="h3" className="mb-8">
           Login
@@ -85,7 +89,7 @@ const Login = () => {
         </p>
         {loading ? (
           <LoadingButton
-            size="medium"
+            size="large"
             color="error"
             loading={loading}
             loadingPosition="end"
@@ -94,7 +98,7 @@ const Login = () => {
             <span className="mr-6">Login</span>
           </LoadingButton>
         ) : (
-          <Button variant="contained" type="submit">
+          <Button variant="contained" size="large" type="submit">
             Login
           </Button>
         )}

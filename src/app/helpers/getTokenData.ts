@@ -12,7 +12,9 @@ export const getTokenData = (request: NextRequest) => {
 
       return loginTokenData.id;
     }
-    return "cookies not set in application";
+    console.log("token not found");
+
+    return null;
   } catch (error) {
     return "error";
   }

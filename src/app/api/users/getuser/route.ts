@@ -6,6 +6,7 @@ export async function GET(request: NextRequest) {
   try {
     //get token data
     const userId = getTokenData(request);
+
     const loggedInUser = await User.findOne(
       { _id: userId },
       { username: 1, email: 1 }

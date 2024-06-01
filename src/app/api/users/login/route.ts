@@ -31,7 +31,11 @@ export async function POST(request: NextRequest) {
       expiresIn: "1h",
     });
     // create a response
-    const response = NextResponse.json({ msg: "loggedIn", statusCode: 200 });
+    const response = NextResponse.json({
+      msg: "loggedIn",
+      statusCode: 200,
+      loggedInUser: jwtTokenData,
+    });
     response.cookies.set("loginToken", jwtToken, { httpOnly: true });
 
     return response;

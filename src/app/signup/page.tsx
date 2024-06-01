@@ -44,7 +44,7 @@ const Signup = () => {
       <ToastContainer />
       <form
         onSubmit={handleSubmit(submit)}
-        className="w-96 flex flex-col items-center"
+        className="w-3/4 flex flex-col items-center sm:w-96"
       >
         <Typography variant="h3" className="mb-8">
           Sign Up
@@ -115,7 +115,7 @@ const Signup = () => {
         </p>
         {loading ? (
           <LoadingButton
-            size="medium"
+            size="large"
             color="error"
             loading={loading}
             loadingPosition="end"
@@ -124,7 +124,7 @@ const Signup = () => {
             <span className="mr-6">Sign Up</span>
           </LoadingButton>
         ) : (
-          <Button variant="contained" type="submit">
+          <Button variant="contained" size="large" type="submit">
             Sign Up
           </Button>
         )}
