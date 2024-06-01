@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       email,
       password: hashedPassword,
     });
-    // add user to database
+    // // add user to database
     const savedUser = await newUser.save();
     const res = await sendEmailVerification({
       email,
