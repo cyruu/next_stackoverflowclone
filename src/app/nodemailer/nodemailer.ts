@@ -76,7 +76,7 @@ function emailFormat(
           <div class="content">
               <p>${subheader}</p>
               <a href="${
-                process.env.DOMAIN
+                process.env.HOSTED_DOMAN
               }/${route}/${token}" class="button">${buttonText}</a>
           </div>
           <div class="footer">
