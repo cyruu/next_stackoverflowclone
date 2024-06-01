@@ -6,11 +6,28 @@ import { ListItemText, ListItem } from "@mui/material";
 import QuizIcon from "@mui/icons-material/Quiz";
 import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import Link from "next/link";
-const Dropdown = () => {
+import axios from "axios";
+import { useRouter } from "next/navigation";
+const Dropdown = ({ loggedIn }: any) => {
+  const router = useRouter();
   const [showDropdown, setShowdropdown] = useState(false);
 
+  //logout
+  async function handleLogout() {
+    try {
+      console.log("mamba out");
+
+      const res = await axios.get("/api/users/logout");
+      if (res.data.statusCode == 200) {
+        router.push("/login");
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
+  }
   return (
     <>
       {/* <div className="dropdownLinks absolute top-20 bg-white w-44"> */}
@@ -36,22 +53,35 @@ const Dropdown = () => {
               <ListItemText primary="Questions" />
             </ListItem>
           </Link>
-          <Link href="/login">
-            <ListItem className="p-0">
-              {/* <ListItemIcon > */}
-              <LoginIcon className="p-0 w-max mx-2" />
-              {/* </ListItemIcon> */}
-              <ListItemText primary="Login" />
-            </ListItem>
-          </Link>
-          <Link href="/signup">
-            <ListItem className="p-0">
-              {/* <ListItemIcon > */}
-              <AddBoxOutlinedIcon className="p-0 w-max mx-2" />
-              {/* </ListItemIcon> */}
-              <ListItemText primary="Sign Up" />
-            </ListItem>
-          </Link>
+          {loggedIn ? (
+            <button className="cursor-pointer" onClick={handleLogout}>
+              <ListItem className="p-0">
+                {/* <ListItemIcon > */}
+                <LogoutIcon className="p-0 w-max mx-2" />
+                {/* </ListItemIcon> */}
+                <ListItemText primary="Logout" />
+              </ListItem>
+            </button>
+          ) : (
+            <>
+              <Link href="/login">
+                <ListItem className="p-0">
+                  {/* <ListItemIcon > */}
+                  <LoginIcon className="p-0 w-max mx-2" />
+                  {/* </ListItemIcon> */}
+                  <ListItemText primary="Login" />
+                </ListItem>
+              </Link>
+              <Link href="/signup">
+                <ListItem className="p-0">
+                  {/* <ListItemIcon > */}
+                  <AddBoxOutlinedIcon className="p-0 w-max mx-2" />
+                  {/* </ListItemIcon> */}
+                  <ListItemText primary="Sign Up" />
+                </ListItem>
+              </Link>
+            </>
+          )}
         </List>
       ) : (
         ""

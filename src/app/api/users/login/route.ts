@@ -1,6 +1,9 @@
 import User from "@/app/model/UserModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { connect } from "@/app/dbConfig/dbConfig";
+connect();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
@@ -20,9 +23,19 @@ export async function POST(request: NextRequest) {
     }
     // valid user logged in
     // create a jwt token
+    const jwtTokenData = {
+      id: loggedInUser._id,
+      username: loggedInUser.username,
+    };
+    const jwtToken = jwt.sign(jwtTokenData, process.env.JWT_SECRET_KEY!, {
+      expiresIn: "1h",
+    });
+    // create a response
+    const response = NextResponse.json({ msg: "loggedIn", statusCode: 200 });
+    response.cookies.set("loginToken", jwtToken, { httpOnly: true });
 
-    return NextResponse.json({ msg: "loggedIn", statusCode: 200 });
+    return response;
   } catch (error: any) {
-    return NextResponse.json({ msg: error });
+    return NextResponse.json({ msg: "Db connection error", statusCode: 404 });
   }
 }

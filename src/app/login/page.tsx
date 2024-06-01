@@ -4,27 +4,15 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import { Button, TextField, Typography } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import { notify } from "@/app/helpers/notify";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 type formValues = {
   email: String;
   password: String;
 };
-//react toast notification
-const notify = (errmsg: String, statusCode: Number) =>
-  toast(errmsg, {
-    position: "top-center",
-    autoClose: statusCode == 200 ? false : 2500,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    type: statusCode == 200 ? "success" : "error",
-    theme: "colored",
-  });
+
 const Login = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -36,9 +24,11 @@ const Login = () => {
     console.log(res.data.msg);
     notify(res.data.msg, res.data.statusCode);
     setLoading(false);
-    setTimeout(() => {
-      router.push("/questions");
-    }, 1500);
+    if (res.data.statusCode == 200) {
+      setTimeout(() => {
+        router.push("/questions");
+      }, 1500);
+    }
   };
   return (
     <div className="h-[89vh] flex items-center justify-center">
@@ -52,7 +42,7 @@ const Login = () => {
         </Typography>
 
         <TextField
-          autoComplete="off"
+          // autoComplete="off"
           {...register("email", {
             required: {
               value: true,
@@ -73,7 +63,7 @@ const Login = () => {
           {errors.email?.message}
         </p>
         <TextField
-          autoComplete="off"
+          // autoComplete="off"
           {...register("password", {
             pattern: {
               value: /^[a-zA-Z0-9@]{8,}$/,

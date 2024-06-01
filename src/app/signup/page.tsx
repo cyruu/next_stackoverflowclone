@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { Button, TextField, Typography } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import { notify } from "@/app/helpers/notify";
 import { LoadingButton } from "@mui/lab";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -13,19 +13,6 @@ type formValues = {
   email: String;
   password: String;
 };
-//react toast notification
-const notify = (errmsg: String, statusCode: Number) =>
-  toast(errmsg, {
-    position: "top-center",
-    autoClose: statusCode == 200 ? false : 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    type: statusCode == 200 ? "success" : "error",
-    theme: "colored",
-  });
 
 //component
 const Signup = () => {
