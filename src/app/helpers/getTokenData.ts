@@ -4,6 +4,11 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 export const getTokenData = (request: NextRequest) => {
   try {
     const loginToken = request.cookies.get("loginToken")?.value;
+    console.log("checking token inside getToken", loginToken);
+    //document token
+    const t = document.cookie;
+    console.log("document cookie ", t);
+
     if (loginToken) {
       const loginTokenData = jwt.verify(
         loginToken,
