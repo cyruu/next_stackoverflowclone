@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Button, Typography } from "@mui/material";
 import Link from "next/link";
 const LandingPage = () => {
+  //test
   return (
     <div className="h-[89vh] relative flex flex-col items-center justify-center sm:flex-row">
       <Image src={landing} alt="" className="w-full sm:w-1/2 mr-18 " />
