@@ -6,8 +6,7 @@ export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
   // check if it is public path
   // logged in le yeta jana mildaina
-  const isPublicPath =
-    path == "/login" || path == "/signup" || path == "/questions";
+  const isPublicPath = path == "/login" || path == "/signup";
   // get token
   const loginToken = request.cookies.get("loginToken");
 
@@ -21,7 +20,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(`${baseUrl}/questions`);
   }
   // not logged in-> cant access private page
-  if (!loginToken && !isPublicPath) {
+  else if (!loginToken && !isPublicPath) {
     const baseUrl = request.nextUrl.origin;
     return NextResponse.redirect(new URL("/login", request.nextUrl));
   }
@@ -29,5 +28,5 @@ export function middleware(request: NextRequest) {
 
 // matching part
 export const config = {
-  matcher: ["/", "/login", "/signup", "/questions"],
+  matcher: ["/login", "/signup"],
 };
