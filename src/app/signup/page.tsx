@@ -57,12 +57,13 @@ const Signup = () => {
       <ToastContainer />
       <form
         onSubmit={handleSubmit(submit)}
-        className="w-72 flex flex-col items-center"
+        className="w-96 flex flex-col items-center"
       >
         <Typography variant="h3" className="mb-8">
           Sign Up
         </Typography>
         <TextField
+          autoComplete="off"
           {...register("username", {
             pattern: {
               value: /^[a-zA-Z0-9]{5,}$/,
@@ -78,12 +79,13 @@ const Signup = () => {
           label="Username"
           variant="standard"
           color={errors.username ? "error" : "primary"}
-          className="w-full mt-4"
+          className="w-full mt-6"
         />
         <p className="mr-auto text-xs m-0 text-red-700 mt-1">
           {errors.username?.message}
         </p>
         <TextField
+          autoComplete="off"
           {...register("email", {
             required: {
               value: true,
@@ -97,13 +99,14 @@ const Signup = () => {
           id="standard-basic"
           label="Email"
           variant="standard"
-          className="w-full mt-4"
+          className="w-full mt-6"
           color={errors.email ? "error" : "primary"}
         />
         <p className="mr-auto text-xs m-0 text-red-700 mt-1">
           {errors.email?.message}
         </p>
         <TextField
+          autoComplete="off"
           {...register("password", {
             pattern: {
               value: /^[a-zA-Z0-9@]{8,}$/,
@@ -118,7 +121,7 @@ const Signup = () => {
           color={errors.password ? "error" : "primary"}
           label="Password"
           variant="standard"
-          className="w-full mt-4"
+          className="w-full mt-6"
         />
         <p className="mr-auto text-xs m-0 text-red-700 mt-1 mb-8">
           {errors.password?.message}

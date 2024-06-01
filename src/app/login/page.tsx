@@ -7,6 +7,7 @@ import { Button, TextField, Typography } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 type formValues = {
   email: String;
   password: String;
@@ -15,7 +16,7 @@ type formValues = {
 const notify = (errmsg: String, statusCode: Number) =>
   toast(errmsg, {
     position: "top-center",
-    autoClose: 2500,
+    autoClose: statusCode == 200 ? false : 2500,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -25,6 +26,7 @@ const notify = (errmsg: String, statusCode: Number) =>
     theme: "colored",
   });
 const Login = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState } = useForm<formValues>();
   const { errors } = formState;
@@ -34,19 +36,23 @@ const Login = () => {
     console.log(res.data.msg);
     notify(res.data.msg, res.data.statusCode);
     setLoading(false);
+    setTimeout(() => {
+      router.push("/questions");
+    }, 1500);
   };
   return (
     <div className="h-[89vh] flex items-center justify-center">
       <ToastContainer />
       <form
         onSubmit={handleSubmit(submit)}
-        className="w-72 flex flex-col items-center"
+        className="w-96 flex flex-col items-center"
       >
         <Typography variant="h3" className="mb-8">
           Login
         </Typography>
 
         <TextField
+          autoComplete="off"
           {...register("email", {
             required: {
               value: true,
@@ -61,12 +67,13 @@ const Login = () => {
           id="standard-basic"
           label="Email"
           variant="standard"
-          className="w-full mt-4"
+          className="w-full mt-6"
         />
         <p className="mr-auto text-xs m-0 text-red-700 mt-1">
           {errors.email?.message}
         </p>
         <TextField
+          autoComplete="off"
           {...register("password", {
             pattern: {
               value: /^[a-zA-Z0-9@]{8,}$/,
