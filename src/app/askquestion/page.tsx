@@ -4,15 +4,13 @@ import AskQuestionHeader from "../components/askquestion/AskQuestionHeader";
 import Title from "../components/askquestion/Title";
 import Details from "../components/askquestion/Details";
 import Expect from "../components/askquestion/Expect";
-import React from "react";
-import {
-  Paper,
-  TextField,
-  Typography,
-  Button,
-  Modal,
-  Box,
-} from "@mui/material";
+import React, { useState } from "react";
+import { Typography, Button, Modal, Box } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import axios from "axios";
+import { notify } from "../helpers/notify";
+import { ToastContainer } from "react-toastify";
+import { useRouter } from "next/navigation";
 //style
 const inputStyle =
   "text-xs p-2 rounded-md outline-blue-400 w-full mt-3 border broder-gray-1000 sm:text-sm";
@@ -28,16 +26,32 @@ const style = {
 };
 const AskQuestion = () => {
   const { register, handleSubmit, formState } = useForm();
-  const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { errors } = formState;
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    try {
+      console.log(data);
+      setLoading(true);
+      const queRes = await axios.post("/api/questions/postquestion", data);
+      if (queRes.data.statusCode == 200) {
+        notify(queRes.data.msg, queRes.data.statusCode);
+        setTimeout(() => {
+          setLoading(false);
+          window.location.reload();
+        }, 3000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <div className=" w-[93%] sm:w-2/3 mx-auto my-9">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <ToastContainer />
+      <form>
         <AskQuestionHeader />
         {/* title */}
         <Title
@@ -99,20 +113,36 @@ const AskQuestion = () => {
             >
               Are you sure you want to post this question?
             </Typography>
+            {errors.title || errors.details || errors.expect ? (
+              <Button variant="contained" disabled className="py-1 px-3 mr-3">
+                Invalid Form Data
+              </Button>
+            ) : loading ? (
+              <LoadingButton
+                size="small"
+                color="error"
+                loading={loading}
+                loadingPosition="end"
+                variant="contained"
+              >
+                <span className="mr-6">Posting</span>
+              </LoadingButton>
+            ) : (
+              <Button
+                type="submit"
+                disableElevation
+                variant="contained"
+                size="medium"
+                className="p-1 mr-3"
+                color="primary"
+                onClick={handleSubmit(onSubmit)}
+              >
+                Post
+              </Button>
+            )}
             <Button
               disableElevation
               onClick={handleClose}
-              variant="contained"
-              size="medium"
-              className="p-1 mr-3"
-              color="primary"
-            >
-              Post
-            </Button>
-            <Button
-              disableElevation
-              onClick={handleClose}
-              variant="outlined"
               size="medium"
               className="p-1"
               color="error"
