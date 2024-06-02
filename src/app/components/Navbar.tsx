@@ -38,7 +38,7 @@ const Navbar = () => {
     dis(getCookieUser());
   }, []);
   return (
-    <nav className="h-20 flex items-center justify-between px-5 sm:px-[10%]">
+    <nav className="h-20 flex items-center justify-between pr-5 sm:px-[10%]">
       <Dropdown />
       <Link href="/">
         <Image src={queryLogo} className="w-24 sm:w-32" alt={""} />

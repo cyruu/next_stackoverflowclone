@@ -45,7 +45,7 @@ const Dropdown = () => {
           }, 100);
         }}
       >
-        <MenuIcon className="mr-4 cursor-pointer" />
+        <MenuIcon className="mx-4 cursor-pointer" sx={{ fontSize: "1.8rem" }} />
       </button>
       {showDropdown ? (
         <List
@@ -60,6 +60,16 @@ const Dropdown = () => {
               <ListItemText primary="Questions" />
             </ListItem>
           </Link>
+          {/* mobile menus */}
+          <div className="extamenus sm:hidden">
+            <ListItem className="p-2 hover:bg-gray-500">
+              {/* <ListItemIcon > */}
+              <QuizIcon className="p-0 w-max mx-2" />
+              {/* </ListItemIcon> */}
+              <ListItemText primary="Questions" />
+            </ListItem>
+          </div>
+          {/*  login logout */}
           {loggedInUser ? (
             <button
               className="cursor-pointer w-full p-0 hover:bg-gray-500"
