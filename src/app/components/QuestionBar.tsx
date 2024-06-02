@@ -1,5 +1,6 @@
 "use client";
 import { Button, Typography, Divider } from "@mui/material";
+import Link from "next/link";
 import React from "react";
 
 const QuestionBar = () => {
@@ -10,9 +11,11 @@ const QuestionBar = () => {
         <header>
           <Typography variant="h5">All Quesitons</Typography>
         </header>
-        <Button variant="contained" disableElevation>
-          Ask Question
-        </Button>
+        <Link href="/askquestion">
+          <Button variant="contained" disableElevation>
+            Ask Question
+          </Button>
+        </Link>
       </div>
 
       {/* count and options */}
