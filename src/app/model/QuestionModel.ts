@@ -5,6 +5,9 @@ const questionSchema = new mongoose.Schema({
   userId: {
     type: ObjectId || String,
   },
+  userEmail: {
+    type: String,
+  },
   title: {
     type: String,
   },

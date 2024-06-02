@@ -33,8 +33,8 @@ export async function GET(request: NextRequest) {
     // const cookieToken = checkCookie(request);
     // const cookieToken = request.cookies.get("loginToken");
     const cookieToken = {
-      username: "ASDF",
-      email: "asdf@gmail.com",
+      username: "cyrus",
+      email: "cyruz.mhr09@gmail.com",
     };
 
     if (cookieToken) {

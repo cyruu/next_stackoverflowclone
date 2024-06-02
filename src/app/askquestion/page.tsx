@@ -11,6 +11,7 @@ import axios from "axios";
 import { notify } from "../helpers/notify";
 import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 //style
 const inputStyle =
   "text-xs p-2 rounded-md outline-blue-400 w-full mt-3 border broder-gray-1000 sm:text-sm";
@@ -26,6 +27,7 @@ const style = {
 };
 const AskQuestion = () => {
   const { register, handleSubmit, formState } = useForm();
+  const loggedInUser = useSelector((state: any) => state.loggedInUser);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -33,15 +35,21 @@ const AskQuestion = () => {
   const { errors } = formState;
   const onSubmit = async (data: any) => {
     try {
-      console.log(data);
+      const { title, details, expect } = data;
+      const postData = {
+        title,
+        details,
+        expect,
+        userEmail: loggedInUser.email,
+      };
       setLoading(true);
-      const queRes = await axios.post("/api/questions/postquestion", data);
+      const queRes = await axios.post("/api/questions/postquestion", postData);
       if (queRes.data.statusCode == 200) {
         notify(queRes.data.msg, queRes.data.statusCode);
+        setLoading(false);
         setTimeout(() => {
-          setLoading(false);
           window.location.reload();
-        }, 3000);
+        }, 1500);
       }
     } catch (error) {
       console.log(error);
