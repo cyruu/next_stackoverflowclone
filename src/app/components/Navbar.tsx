@@ -33,6 +33,8 @@ const Navbar = () => {
   };
   useEffect(() => {
     // getUser();
+    console.log("navbar mount, checking for cookie");
+
     dis(getCookieUser());
   }, []);
   return (

@@ -4,6 +4,8 @@ import axios from "axios";
 export const getCookieUser = createAsyncThunk(
   "slice/cookieUser",
   async (thunkAPI) => {
+    console.log("thunk start");
+
     const response = await axios.get("api/users/getuser");
     console.log("thunk resp", response);
 

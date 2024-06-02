@@ -3,9 +3,12 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 
 export const getTokenData = (request: NextRequest) => {
   try {
+    console.log("getting token data from cookie");
+
     const loginToken = request.cookies.get("loginToken")?.value;
 
     if (loginToken) {
+      console.log("loginToken found in cookie", loginToken);
       const loginTokenData = jwt.verify(
         loginToken,
         process.env.JWT_SECRET_KEY!
@@ -14,7 +17,7 @@ export const getTokenData = (request: NextRequest) => {
       // string ma aairako cha id
       return loginTokenData;
     }
-    console.log("token not found");
+    console.log("token not found in cookie");
 
     return null;
   } catch (error) {

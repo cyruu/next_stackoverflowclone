@@ -28,6 +28,8 @@ const Login = () => {
     notify(res.data.msg, res.data.statusCode);
     setLoading(false);
     if (res.data.statusCode == 200) {
+      console.log("setting redux data when login manually");
+
       setTimeout(() => {
         dis(setLoggedInUser({ loggedInUser: res.data.loggedInUser }));
         router.push("/questions");
