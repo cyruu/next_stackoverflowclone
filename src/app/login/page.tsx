@@ -27,9 +27,9 @@ const Login = () => {
     console.log(res.data.msg);
     notify(res.data.msg, res.data.statusCode);
     setLoading(false);
-    dis(setLoggedInUser({ loggedInUser: res.data.loggedInUser }));
     if (res.data.statusCode == 200) {
       setTimeout(() => {
+        dis(setLoggedInUser({ loggedInUser: res.data.loggedInUser }));
         router.push("/questions");
       }, 1500);
     }

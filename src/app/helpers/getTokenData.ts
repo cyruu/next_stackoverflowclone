@@ -12,14 +12,12 @@ export const getTokenData = (request: NextRequest) => {
       ) as JwtPayload;
 
       // string ma aairako cha id
-      return loginTokenData.email;
+      return loginTokenData;
     }
     console.log("token not found");
 
     return null;
   } catch (error) {
     console.log(error);
-
-    return "error";
   }
 };

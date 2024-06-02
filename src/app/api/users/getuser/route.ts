@@ -6,26 +6,28 @@ export async function GET(request: NextRequest) {
   try {
     //get token data
     // get email instead of _id
-    const userEmail = getTokenData(request);
+    const user = getTokenData(request);
     // userId in form of string
+    if (user) {
+      const loggedInUser = await User.findOne(
+        { email: user.email },
+        { username: 1, email: 1 }
+      );
 
-    const loggedInUser = await User.findOne(
-      { email: userEmail },
-      { username: 1, email: 1 }
-    );
-    // console.log("searched user with string id", loggedInUser);
-
-    if (loggedInUser) {
-      return NextResponse.json({
-        msg: "Logged in user found",
-        loggedInUser,
-        statusCode: 200,
-      });
+      if (loggedInUser) {
+        return NextResponse.json({
+          msg: "Logged in user found",
+          loggedInUser,
+          statusCode: 200,
+        });
+      }
     }
+    // console.log("searched user with string id", loggedInUser);
 
     return NextResponse.json({
       msg: "Logged in user not found",
       statusCode: 404,
+      loggedInUser: null,
     });
   } catch (error) {
     return NextResponse.json({
