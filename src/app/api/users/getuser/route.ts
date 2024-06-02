@@ -31,7 +31,11 @@ function getJwtDataFromCookieToken(cookieToken: string) {
 export async function GET(request: NextRequest) {
   try {
     // const cookieToken = checkCookie(request);
-    const cookieToken = request.cookies.get("loginToken");
+    // const cookieToken = request.cookies.get("loginToken");
+    const cookieToken = {
+      username: "ASDF",
+      email: "asdf@gmail.com",
+    };
 
     if (cookieToken) {
       // extract jwtTokenData from cookieToken

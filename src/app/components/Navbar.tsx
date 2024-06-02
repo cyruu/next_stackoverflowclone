@@ -34,6 +34,10 @@ const Navbar = () => {
         //   cookieRes.data.jwtTokenData
         // );
         dis(setLoggedInUser({ loggedInUser: cookieRes.data.cookieToken }));
+        console.log(
+          "after setting cookie data to loogedINuerid redux",
+          loggedInUser
+        );
       } else {
         dis(setLoggedInUser({ loggedInUser: null }));
         console.log("no user", cookieRes.data);
