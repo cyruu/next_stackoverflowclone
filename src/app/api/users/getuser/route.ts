@@ -30,17 +30,18 @@ function getJwtDataFromCookieToken(cookieToken: string) {
 //main
 export async function GET(request: NextRequest) {
   try {
-    const cookieToken = checkCookie(request);
+    // const cookieToken = checkCookie(request);
+    const cookieToken = request.cookies.get("loginToken");
 
     if (cookieToken) {
       // extract jwtTokenData from cookieToken
-      const jwtTokenData = getJwtDataFromCookieToken(cookieToken);
+      // const jwtTokenData = getJwtDataFromCookieToken(cookieToken);
       // console.log("token exracted: ", jwtTokenData);
 
       return NextResponse.json({
         msg: "User available",
         statusCode: 200,
-        jwtTokenData,
+        cookieToken,
       });
     }
 

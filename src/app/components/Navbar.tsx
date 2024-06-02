@@ -33,7 +33,7 @@ const Navbar = () => {
         //   "user exists , response jwtdata",
         //   cookieRes.data.jwtTokenData
         // );
-        dis(setLoggedInUser({ loggedInUser: cookieRes.data.jwtTokenData }));
+        dis(setLoggedInUser({ loggedInUser: cookieRes.data.cookieToken }));
       } else {
         dis(setLoggedInUser({ loggedInUser: null }));
         console.log("no user", cookieRes.data);
@@ -65,13 +65,13 @@ const Navbar = () => {
           <List className=" p-0">
             <ListItem className="p-0">
               <Avatar className="bg-blue-600  mr-1 sm:mr-2 w-8 h-8 text-sm">
-                {loggedInUser.username[0]}
+                c
               </Avatar>
               <ListItemText
                 primary={
                   <>
                     <Typography className="text-md">
-                      {loggedInUser.username}
+                      {loggedInUser.username}cy
                     </Typography>
                   </>
                 }
