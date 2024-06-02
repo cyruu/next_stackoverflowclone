@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-export async function getJwtDataFromCookieToken(cookieToken: string) {
+export function getJwtDataFromCookieToken(cookieToken: string) {
   try {
     const jwtTokenData = jwt.verify(cookieToken, process.env.JWT_SECRET_KEY!);
     if (jwtTokenData) {
