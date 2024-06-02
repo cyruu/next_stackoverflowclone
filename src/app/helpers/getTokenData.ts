@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt, { JwtPayload } from "jsonwebtoken";
-
+// use gareko chaina because thunk ko api/users/getUser ma comment gareko namilera
 export const getTokenData = (request: NextRequest) => {
   try {
     console.log("getting token data from cookie");

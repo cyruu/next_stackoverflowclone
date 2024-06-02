@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// async thunk not used
 export const getCookieUser = createAsyncThunk(
   "slice/cookieUser",
   async (thunkAPI) => {

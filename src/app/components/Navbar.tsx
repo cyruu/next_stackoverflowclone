@@ -18,24 +18,35 @@ import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { ThunkDispatch } from "@reduxjs/toolkit";
-import { getCookieUser } from "../slices/appSlice";
+import { getCookieUser, setLoggedInUser } from "../slices/appSlice";
 const Navbar = () => {
   const dis = useDispatch<ThunkDispatch<any, any, any>>();
   const loggedInUser = useSelector((state: any) => state.loggedInUser);
   // console.log("check", loggedInUser);
+  console.log("loggedInUser", loggedInUser);
 
   const getUser = async () => {
     try {
-      const res = await axios.get("api/users/getuser");
+      const cookieRes = await axios.get("api/users/getuser");
+      if (cookieRes.data.statusCode == 200) {
+        // console.log(
+        //   "user exists , response jwtdata",
+        //   cookieRes.data.jwtTokenData
+        // );
+        dis(setLoggedInUser({ loggedInUser: cookieRes.data.jwtTokenData }));
+      } else {
+        dis(setLoggedInUser({ loggedInUser: null }));
+        console.log("no user", cookieRes.data);
+      }
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    // getUser();
     console.log("navbar mount, checking for cookie");
-
-    dis(getCookieUser());
+    getUser();
+    // yo async thunk dispatch garda refresh garda loggedInUser false in thyo
+    // dis(getCookieUser());
   }, []);
   return (
     <nav className="h-20 flex items-center justify-between pr-5 sm:px-[10%]">
@@ -54,7 +65,7 @@ const Navbar = () => {
           <List className=" p-0">
             <ListItem className="p-0">
               <Avatar className="bg-blue-600  mr-1 sm:mr-2 w-8 h-8 text-sm">
-                {loggedInUser.username[0].toUpperCase()}
+                {loggedInUser.username[0]}
               </Avatar>
               <ListItemText
                 primary={
