@@ -8,10 +8,12 @@ const QuestionBar = () => {
   const [questions, setQuestions] = useState([]);
   async function getInitialQuestions() {
     try {
+      console.log("getting questions");
       const res = await axios.get("api/questions/getquestions");
       if (res.data.statusCode == 200) {
         setQuestions(res.data.questions);
       }
+      console.log(res);
     } catch (error) {
       console.log(error);
     }

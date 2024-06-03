@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const questionSchema = new mongoose.Schema({
   userId: {
-    type: Schema.ObjectId || String,
+    type: mongoose.Schema.Types.ObjectId,
   },
   userEmail: {
     type: String,
