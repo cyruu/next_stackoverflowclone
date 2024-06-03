@@ -33,7 +33,7 @@ const Navbar = () => {
         //   "user exists , response jwtdata",
         //   cookieRes.data.jwtTokenData
         // );
-        dis(setLoggedInUser({ loggedInUser: cookieRes.data.cookieToken }));
+        dis(setLoggedInUser({ loggedInUser: cookieRes.data.jwtTokenData }));
         console.log(
           "after setting cookie data to loogedINuerid redux",
           loggedInUser
@@ -75,7 +75,7 @@ const Navbar = () => {
                 primary={
                   <>
                     <Typography className="text-md">
-                      {loggedInUser.username}cy
+                      {loggedInUser.username}
                     </Typography>
                   </>
                 }

@@ -3,6 +3,8 @@ import { Typography, Divider } from "@mui/material";
 import React from "react";
 
 const Question = ({ question }: any) => {
+  console.log("question", question);
+
   return (
     <div
       className="flex flex-col items-start mb-10 pb-3 sm:flex-row "
@@ -15,7 +17,7 @@ const Question = ({ question }: any) => {
         <Typography variant="body2">1 answers</Typography>
       </div>
       <div className="questiondetails ">
-        <Typography variant="h6">title</Typography>
+        <Typography variant="h6">{question.title}</Typography>
         <Typography variant="body2">details</Typography>
         <div className="footer">
           <Typography variant="body2">sdf</Typography>

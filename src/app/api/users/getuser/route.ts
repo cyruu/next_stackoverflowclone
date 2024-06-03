@@ -30,22 +30,24 @@ function getJwtDataFromCookieToken(cookieToken: string) {
 //main
 export async function GET(request: NextRequest) {
   try {
-    // const cookieToken = checkCookie(request);
+    const cookieToken = checkCookie(request);
     // const cookieToken = request.cookies.get("loginToken");
-    const cookieToken = {
-      username: "cyrus",
-      email: "cyruz.mhr09@gmail.com",
-    };
+    // const cookieToken = {
+
+    //   username: "cyrus",
+    //   email: "cyruz.mhr09@gmail.com",
+    // };
 
     if (cookieToken) {
       // extract jwtTokenData from cookieToken
-      // const jwtTokenData = getJwtDataFromCookieToken(cookieToken);
-      // console.log("token exracted: ", jwtTokenData);
+      const jwtTokenData = getJwtDataFromCookieToken(cookieToken);
+      console.log("token exracted: ", jwtTokenData);
 
       return NextResponse.json({
         msg: "User available",
         statusCode: 200,
-        cookieToken,
+        // cookieToken,
+        jwtTokenData,
       });
     }
 

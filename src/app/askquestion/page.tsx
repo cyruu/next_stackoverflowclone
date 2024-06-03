@@ -10,8 +10,9 @@ import { LoadingButton } from "@mui/lab";
 import axios from "axios";
 import { notify } from "../helpers/notify";
 import { ToastContainer } from "react-toastify";
-import { useRouter } from "next/navigation";
+
 import { useSelector } from "react-redux";
+
 //style
 const inputStyle =
   "text-xs p-2 rounded-md outline-blue-400 w-full mt-3 border broder-gray-1000 sm:text-sm";
@@ -40,10 +41,11 @@ const AskQuestion = () => {
         title,
         details,
         expect,
-        userEmail: loggedInUser.email,
+        userId: loggedInUser.id,
       };
       setLoading(true);
       const queRes = await axios.post("/api/questions/postquestion", postData);
+      //user id in form of string
       if (queRes.data.statusCode == 200) {
         notify(queRes.data.msg, queRes.data.statusCode);
         setLoading(false);
