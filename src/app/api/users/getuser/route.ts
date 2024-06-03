@@ -5,7 +5,7 @@ import User from "@/app/model/UserModel";
 // import { checkCookie } from "@/app/helpers/checkCookie";
 // import { getJwtDataFromCookieToken } from "@/app/helpers/getJwtDataFromCookieToken";
 //test
-export function getJwtDataFromCookieToken(request: NextRequest) {
+function getJwtDataFromCookieToken(request: NextRequest) {
   try {
     const cookieToken = request.cookies.get("loginToken")?.value || "";
 
@@ -23,24 +23,27 @@ export function getJwtDataFromCookieToken(request: NextRequest) {
 
 //main
 export async function GET(request: NextRequest) {
-  const jwtTokenData = getJwtDataFromCookieToken(request);
   try {
+    // const jwtTokenData = getJwtDataFromCookieToken(request);
     // const cookieToken = request.cookies.get("loginToken");
     // const cookieToken = {
 
     //   username: "cyrus",
     //   email: "cyruz.mhr09@gmail.com",
     // };
+    const cookieToken = request.cookies.get("loginToken")?.value || "";
+    if (cookieToken) {
+      const jwtTokenData = jwt.verify(cookieToken, process.env.JWT_SECRET_KEY!);
+      if (jwtTokenData) {
+        // extract jwtTokenData from cookieToken
 
-    if (jwtTokenData) {
-      // extract jwtTokenData from cookieToken
-
-      return NextResponse.json({
-        msg: "User available",
-        statusCode: 200,
-        // cookieToken,
-        jwtTokenData,
-      });
+        return NextResponse.json({
+          msg: "User available",
+          statusCode: 200,
+          // cookieToken,
+          jwtTokenData,
+        });
+      }
     }
 
     return NextResponse.json({
@@ -80,10 +83,9 @@ export async function GET(request: NextRequest) {
     // });
   } catch (error: any) {
     return NextResponse.json({
-      msg: "something wrong in db query",
+      msg: "something wrong in db query (cookie)",
       statusCode: 404,
       error: error,
-      jwtTokenData,
     });
   }
 }
