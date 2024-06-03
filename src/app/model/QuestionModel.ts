@@ -1,9 +1,8 @@
-import { ObjectId } from "bson";
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const questionSchema = new mongoose.Schema({
   userId: {
-    type: ObjectId || String,
+    type: Schema.ObjectId || String,
   },
   userEmail: {
     type: String,
