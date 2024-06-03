@@ -3,11 +3,27 @@ import { getTokenData } from "@/app/helpers/getTokenData";
 import jwt from "jsonwebtoken";
 import User from "@/app/model/UserModel";
 // import { checkCookie } from "@/app/helpers/checkCookie";
-import { getJwtDataFromCookieToken } from "@/app/helpers/getJwtDataFromCookieToken";
+// import { getJwtDataFromCookieToken } from "@/app/helpers/getJwtDataFromCookieToken";
 //test
+export function getJwtDataFromCookieToken(request: NextRequest) {
+  try {
+    const cookieToken = request.cookies.get("loginToken")?.value || "";
+
+    const jwtTokenData = jwt.verify(cookieToken, process.env.JWT_SECRET_KEY!);
+
+    if (jwtTokenData) {
+      return jwtTokenData;
+    }
+
+    return null;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
 
 //main
 export async function GET(request: NextRequest) {
+  const jwtTokenData = getJwtDataFromCookieToken(request);
   try {
     // const cookieToken = request.cookies.get("loginToken");
     // const cookieToken = {
@@ -16,7 +32,6 @@ export async function GET(request: NextRequest) {
     //   email: "cyruz.mhr09@gmail.com",
     // };
 
-    const jwtTokenData = getJwtDataFromCookieToken(request);
     if (jwtTokenData) {
       // extract jwtTokenData from cookieToken
 
@@ -63,11 +78,12 @@ export async function GET(request: NextRequest) {
     //   loggedInUser: null,
     //   // respUser: user,
     // });
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json({
       msg: "something wrong in db query",
       statusCode: 404,
-      err: error,
+      error: error,
+      jwtTokenData,
     });
   }
 }
