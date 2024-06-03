@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 // logic part
 
 export function middleware(request: NextRequest) {
+  request.nextUrl.searchParams.set("__nextDynamic", "true");
   // get current path
   const path = request.nextUrl.pathname;
   // check if it is public path
