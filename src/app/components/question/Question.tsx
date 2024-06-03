@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const Question = ({ question }: any) => {
-  const { _id, details, createdAt, expect, title, vote, answers, userId } =
+  const { _id, details, createdAt, expect, title, votes, ansCount, userId } =
     question;
   const [userDetails, setUserDetails] = useState({ username: "", email: "" });
   const date = new Date(createdAt);
@@ -35,12 +35,12 @@ const Question = ({ question }: any) => {
       className="flex flex-col items-start mb-10 pb-3 mx-7 sm:mx-0 sm:flex-row"
       style={{ borderBottom: "1px solid #DADADA" }}
     >
-      <div className="vote-answer  mr-5 mt-2 flexsm:flex-col">
-        <Typography variant="body2" className="mb-1 text-right">
-          1 vote
+      <div className="vote-answer  mr-5 mt-2 flex sm:flex-col">
+        <Typography variant="body2" className="mb-1 text-right mr-3 sm:mr-0">
+          {votes} vote
         </Typography>
         <Typography variant="body2" className="text-right">
-          1 answers
+          {ansCount} answers
         </Typography>
       </div>
       <div className="questiondetails  flex-1 w-full">
@@ -52,8 +52,8 @@ const Question = ({ question }: any) => {
         <Typography variant="body2">{details}</Typography>
         <div className="footer">
           <div className="flex justify-end  items-center">
-            <Typography
-              sx={{ fontSize: ".8rem" }}
+            <div
+              style={{ fontSize: ".8rem" }}
               className=" flex items-center text-gray-500"
             >
               <Avatar
@@ -63,7 +63,7 @@ const Question = ({ question }: any) => {
                 {userDetails.username[0]}
               </Avatar>
               {userDetails.username} at
-            </Typography>
+            </div>
             <Typography
               sx={{ fontSize: ".8rem" }}
               className="text-gray-500 ml-1"

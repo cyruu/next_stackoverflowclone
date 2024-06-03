@@ -17,6 +17,8 @@ export async function POST(request: NextRequest) {
       title,
       details,
       expect,
+      votes: 0,
+      ansCount: 0,
       createdAt: Date.now(),
     });
     const savedQuestion = await newQuestion.save();

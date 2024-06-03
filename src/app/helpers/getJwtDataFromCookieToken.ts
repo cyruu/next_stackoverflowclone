@@ -1,13 +1,14 @@
 import jwt from "jsonwebtoken";
-export function getJwtDataFromCookieToken(cookieToken: string) {
+import { NextRequest } from "next/server";
+export function getJwtDataFromCookieToken(request: NextRequest) {
   try {
+    const cookieToken = request.cookies.get("loginToken")?.value || "";
     const jwtTokenData = jwt.verify(cookieToken, process.env.JWT_SECRET_KEY!);
     if (jwtTokenData) {
       return jwtTokenData;
     }
     return null;
-  } catch (error) {
-    // logged in console
-    console.log("error");
+  } catch (error: any) {
+    throw new Error(error.message);
   }
 }

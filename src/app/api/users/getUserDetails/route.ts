@@ -1,6 +1,8 @@
 import User from "@/app/model/UserModel";
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
+import { connect } from "@/app/dbConfig/dbConfig";
+connect();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
