@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { getTokenData } from "@/app/helpers/getTokenData";
 import jwt from "jsonwebtoken";
 import User from "@/app/model/UserModel";
+import { cookies } from "next/headers";
 // import { checkCookie } from "@/app/helpers/checkCookie";
 // import { getJwtDataFromCookieToken } from "@/app/helpers/getJwtDataFromCookieToken";
 //test
 function getJwtDataFromCookieToken(request: NextRequest) {
   try {
-    const cookieToken = request.cookies.get("loginToken")?.value || "";
+    const cookieStore = cookies();
+    const cookieToken = cookieStore.get("loginToken")?.value || "";
 
     const jwtTokenData = jwt.verify(cookieToken, process.env.JWT_SECRET_KEY!);
 
