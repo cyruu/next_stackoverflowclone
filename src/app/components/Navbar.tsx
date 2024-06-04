@@ -19,39 +19,49 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { getCookieUser, setLoggedInUser } from "../slices/appSlice";
-const Navbar = () => {
-  const dis = useDispatch<ThunkDispatch<any, any, any>>();
-  const loggedInUser = useSelector((state: any) => state.loggedInUser);
-  // console.log("check", loggedInUser);
-  console.log("loggedInUser", loggedInUser);
 
-  const getUser = async () => {
+const Navbar = () => {
+  const path = usePathname();
+  const dis = useDispatch<ThunkDispatch<any, any, any>>();
+  // const [cookieLoggedInUser, setCookieLoggedInUser] = useState({});
+  const cookieLoggedInUser = useSelector((state: any) => state.loggedInUser);
+  // console.log("check", loggedInUser);
+
+  // const getUser = async () => {
+  //   try {
+  //     const cookieRes = await axios.get("api/users/getuser");
+  //     if (cookieRes.data.statusCode == 200) {
+  //       // console.log(
+  //       //   "user exists , response jwtdata",
+  //       //   cookieRes.data.jwtTokenData
+  //       // );
+  //       dis(setLoggedInUser({ loggedInUser: cookieRes.data.jwtTokenData }));
+  //     } else {
+  //       dis(setLoggedInUser({ loggedInUser: null }));
+  //       console.log("no user", cookieRes.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  async function getLoggedInUser() {
     try {
-      const cookieRes = await axios.get("api/users/getuser");
-      if (cookieRes.data.statusCode == 200) {
-        // console.log(
-        //   "user exists , response jwtdata",
-        //   cookieRes.data.jwtTokenData
-        // );
-        dis(setLoggedInUser({ loggedInUser: cookieRes.data.jwtTokenData }));
-        console.log(
-          "after setting cookie data to loogedINuerid redux",
-          loggedInUser
-        );
-      } else {
-        dis(setLoggedInUser({ loggedInUser: null }));
-        console.log("no user", cookieRes.data);
-      }
-    } catch (error) {
+      const res = await axios.get("api/users/getLoggedInUser");
+      const user = res.data.loggedInUser;
+      // setCookieLoggedInUser(user);
+      dis(setLoggedInUser({ loggedInUser: user }));
+    } catch (error: any) {
       console.log(error);
     }
-  };
+  }
   useEffect(() => {
     console.log("navbar mount, checking for cookie");
-    getUser();
+    getLoggedInUser();
+
+    // getUser();
     // yo async thunk dispatch garda refresh garda loggedInUser false in thyo
     // dis(getCookieUser());
-  }, []);
+  }, [path]);
   return (
     <nav className="h-20 flex items-center justify-between pr-5 sm:px-[10%]">
       <Dropdown />
@@ -64,7 +74,7 @@ const Navbar = () => {
           <input type="text" className="outline-none w-[80%]" />
         </form>
       </div>
-      {loggedInUser ? (
+      {cookieLoggedInUser ? (
         <div>
           <List className=" p-0">
             <ListItem className="p-0">
@@ -74,9 +84,7 @@ const Navbar = () => {
               <ListItemText
                 primary={
                   <>
-                    <Typography className="text-md">
-                      {loggedInUser.username}
-                    </Typography>
+                    <Typography className="text-md">tempusername</Typography>
                   </>
                 }
                 sx={{ fontSize: "20px" }}

@@ -2,7 +2,10 @@
 import { Button, Typography, Divider } from "@mui/material";
 import Link from "next/link";
 import React from "react";
+import { useSelector } from "react-redux";
 const HeaderQuestionBar = () => {
+  const cookieLoggedInUser = useSelector((state: any) => state.loggedInUser);
+
   return (
     <div className="px-7 mb-7 sm:p-0">
       {/* text and button */}
@@ -10,7 +13,8 @@ const HeaderQuestionBar = () => {
         <header>
           <Typography variant="h5">All Quesitons</Typography>
         </header>
-        <Link href="/askquestion">
+
+        <Link href={`${cookieLoggedInUser ? "/askquestion" : "/login"}`}>
           <Button variant="contained" disableElevation>
             Ask Question
           </Button>
