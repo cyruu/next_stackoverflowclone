@@ -60,8 +60,21 @@ const Question = ({ question }: any) => {
             {title}
           </Typography>
         </Link>
-        <Typography variant="body2">{details}</Typography>
-        <div className="footer">
+        <Typography
+          variant="body1"
+          sx={{
+            display: "-webkit-box",
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            WebkitLineClamp: 3, // Number of 3 to show
+            lineClamp: 3, // Fallback for non-Webkit browsers
+            maxHeight: `10em`, // Adjust the height based on number of lines and line height
+          }}
+        >
+          {details}
+        </Typography>
+        <div className="footer mt-2">
           <div className="flex justify-end  items-center">
             <div
               style={{ fontSize: ".8rem" }}

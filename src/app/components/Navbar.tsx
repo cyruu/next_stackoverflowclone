@@ -77,7 +77,10 @@ const Navbar = () => {
     // dis(getCookieUser());
   }, [path]);
   return (
-    <nav className="h-20 flex items-center justify-between pr-5 sm:px-[10%]">
+    <nav
+      className="h-20 flex items-center justify-between pr-5 sticky top-0 bg-white z-20 sm:px-[10%] "
+      style={{ borderBottom: "1px solid #E2DFD0" }}
+    >
       <div className="flex items-center">
         <ToastContainer />
         <Dropdown />
