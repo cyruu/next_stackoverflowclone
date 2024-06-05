@@ -46,7 +46,7 @@ const Login = () => {
     }
   }
   useEffect(() => {
-    getLoggedInUser();
+    // getLoggedInUser();
   }, []);
   return (
     <div className="h-[89vh] flex items-center justify-center">

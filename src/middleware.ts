@@ -1,6 +1,40 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { auth } from "@/auth"; // Import your auth middleware here
+import { cookies } from "next/headers";
+// This function can be marked `async` if using `await` inside
+export function middleware(request: NextRequest) {
+  const cookieUser = cookies().get("authjs.session-token");
+  const path = request.nextUrl.pathname;
 
-export { auth as middleware } from "@/auth";
+  const isPublic = path == "/login" || path == "/signup";
+  if (cookieUser && isPublic) {
+    console.log(
+      "login cha public page jana mildaina, redireting to questions",
+      path,
+      cookieUser
+    );
+
+    return NextResponse.redirect(new URL("/questions", request.url));
+  }
+  if (!cookieUser && !isPublic) {
+    console.log("login chaina private mildaina", path, cookieUser);
+
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  // Call the auth middleware
+  //   auth(request);
+
+  // Redirect to "/home" URL
+  //   return NextResponse.redirect(new URL("/home", request.url));
+}
+
+// See "Matching Paths" below to learn more
+export const config = {
+  matcher: ["/", "/login", "/signup"],
+};
+
 // logic part
 
 // export function middleware(request: NextRequest) {
