@@ -4,6 +4,7 @@ import Image from "next/image";
 import queryLogo from "@/images/querylogo.png";
 import Dropdown from "./Dropdown";
 import { usePathname } from "next/navigation";
+import ProfileOptions from "./ProfileOptions";
 // components from material ui
 import {
   ListItem,
@@ -23,6 +24,7 @@ import { getCookieUser, setLoggedInUser } from "../slices/appSlice";
 const Navbar = () => {
   const path = usePathname();
   const dis = useDispatch<ThunkDispatch<any, any, any>>();
+  const [showProfileOptions, setShowProfileOptions] = useState(false);
   // const [cookieLoggedInUser, setCookieLoggedInUser] = useState({});
   const cookieLoggedInUser = useSelector((state: any) => state.loggedInUser);
   // console.log("check", loggedInUser);
@@ -64,10 +66,12 @@ const Navbar = () => {
   }, [path]);
   return (
     <nav className="h-20 flex items-center justify-between pr-5 sm:px-[10%]">
-      <Dropdown />
-      <Link href="/">
-        <Image src={queryLogo} className="w-24 sm:w-32" alt={""} />
-      </Link>
+      <div className="flex items-center">
+        <Dropdown />
+        <Link href="/">
+          <Image src={queryLogo} className="w-28 sm:w-32" alt={""} />
+        </Link>
+      </div>
       <div className="searchBar flex-1 flex justify-center hidden whitespace-nowrap sm:flex">
         <form className="w-[60%] border border-gray-300 rounded-md py-1 px-1">
           <SearchIcon className="mx-1" />
@@ -75,22 +79,39 @@ const Navbar = () => {
         </form>
       </div>
       {cookieLoggedInUser ? (
-        <div>
-          <List className=" p-0">
-            <ListItem className="p-0">
-              <Avatar className="bg-blue-600  mr-1 sm:mr-2 w-8 h-8 text-sm">
-                c
-              </Avatar>
-              <ListItemText
-                primary={
-                  <>
-                    <Typography className="text-md">tempusername</Typography>
-                  </>
-                }
-                sx={{ fontSize: "20px" }}
-              />
-            </ListItem>
-          </List>
+        <div className="relative">
+          <button
+            className=" p-0 mr-2"
+            onFocus={() => {
+              setShowProfileOptions(true);
+            }}
+            onBlur={() => {
+              setTimeout(() => {
+                setShowProfileOptions(false);
+              }, 100);
+            }}
+          >
+            <List>
+              <ListItem className="p-0">
+                <Avatar className="bg-blue-600  mr-1 sm:mr-2 w-8 h-8 text-sm">
+                  c
+                </Avatar>
+                <ListItemText
+                  primary={
+                    <>
+                      <Typography className="text-md">
+                        {cookieLoggedInUser.username}
+                      </Typography>
+                    </>
+                  }
+                  sx={{ fontSize: "20px" }}
+                />
+              </ListItem>
+            </List>
+          </button>
+          <div className={`options ${showProfileOptions ? "" : "hidden"}`}>
+            <ProfileOptions />
+          </div>
         </div>
       ) : (
         <div className="buttons hidden sm:block">

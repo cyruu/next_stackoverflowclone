@@ -13,7 +13,7 @@ const QuestionBar = () => {
       if (res.data.statusCode == 200) {
         setQuestions(res.data.questions);
       }
-      console.log(res);
+      console.log("question response", res);
     } catch (error) {
       console.log(error);
     }

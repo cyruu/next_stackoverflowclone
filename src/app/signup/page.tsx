@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { Button, TextField, Typography } from "@mui/material";
@@ -36,7 +36,9 @@ const Signup = () => {
     } catch (error: any) {
       console.log(error);
     }
-
+    useEffect(() => {
+      notify("asdsa", 200);
+    }, []);
     // const res = await sendEmailVerification();    console.log(res);
   };
   return (

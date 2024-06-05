@@ -5,31 +5,42 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const Question = ({ question }: any) => {
-  const { _id, details, createdAt, expect, title, votes, ansCount, userId } =
-    question;
-  const [userDetails, setUserDetails] = useState({ username: "", email: "" });
+  const {
+    _id,
+    details,
+    createdAt,
+    expect,
+    title,
+    votes,
+    ansCount,
+    userId,
+    user,
+  } = question;
+  // const [userDetails, setUserDetails] = useState({ username: "", email: "" });
   const date = new Date(createdAt);
   const year = date.getFullYear();
   const month = date.getMonth();
   const day = date.getDay();
-  async function getQuestionUserData() {
-    try {
-      const res = await axios.post("/api/users/getUserDetails", {
-        userId,
-      });
-      if (res.data.statusCode == 200) {
-        setUserDetails(res.data.userDetails);
-        console.log(res.data.userDetails);
-      } else {
-        console.log(res.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  useEffect(() => {
-    getQuestionUserData();
-  }, []);
+  // get user data
+  const { username, email } = user;
+  // async function getQuestionUserData() {
+  //   try {
+  //     const res = await axios.post("/api/users/getUserDetails", {
+  //       userId,
+  //     });
+  //     if (res.data.statusCode == 200) {
+  //       setUserDetails(res.data.userDetails);
+  //       console.log(res.data.userDetails);
+  //     } else {
+  //       console.log(res.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+  // useEffect(() => {
+  //   getQuestionUserData();
+  // }, []);
   return (
     <div
       className="flex flex-col items-start mb-10 pb-3 mx-7 sm:mx-0 sm:flex-row"
@@ -60,9 +71,9 @@ const Question = ({ question }: any) => {
                 sx={{ height: "20px", width: "20px" }}
                 className="mr-1 text-sm bg-green-600 "
               >
-                {userDetails.username[0]}
+                {username[0]}
               </Avatar>
-              {userDetails.username} at
+              {username} at
             </div>
             <Typography
               sx={{ fontSize: ".8rem" }}

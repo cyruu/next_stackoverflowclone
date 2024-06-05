@@ -34,6 +34,8 @@ const AskQuestion = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { errors } = formState;
+  console.log("logged in resux user", loggedInUser);
+
   const onSubmit = async (data: any) => {
     try {
       const { title, details, expect } = data;
@@ -41,7 +43,7 @@ const AskQuestion = () => {
         title,
         details,
         expect,
-        userId: loggedInUser.id,
+        userId: loggedInUser.userId,
       };
       setLoading(true);
       const queRes = await axios.post("/api/questions/postquestion", postData);
