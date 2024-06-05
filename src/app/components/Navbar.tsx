@@ -20,13 +20,19 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { getCookieUser, setLoggedInUser } from "../slices/appSlice";
+import { notify } from "@/app/helpers/notify";
+import { ToastContainer } from "react-toastify";
 
 const Navbar = () => {
   const path = usePathname();
+
   const dis = useDispatch<ThunkDispatch<any, any, any>>();
+
   const [showProfileOptions, setShowProfileOptions] = useState(false);
+
   // const [cookieLoggedInUser, setCookieLoggedInUser] = useState({});
   const cookieLoggedInUser = useSelector((state: any) => state.loggedInUser);
+
   // console.log("check", loggedInUser);
 
   // const getUser = async () => {
@@ -56,8 +62,14 @@ const Navbar = () => {
       console.log(error);
     }
   }
+  // useEffect(() => {
+  //   if (logoutStatus) {
+  //     notify("mamba out", 200);
+  //   }
+  // }, [logoutStatus]);
   useEffect(() => {
     console.log("navbar mount, checking for cookie");
+    // notify("mamba out", 200);
     getLoggedInUser();
 
     // getUser();
@@ -67,6 +79,7 @@ const Navbar = () => {
   return (
     <nav className="h-20 flex items-center justify-between pr-5 sm:px-[10%]">
       <div className="flex items-center">
+        <ToastContainer />
         <Dropdown />
         <Link href="/">
           <Image src={queryLogo} className="w-28 sm:w-32" alt={""} />
@@ -94,7 +107,7 @@ const Navbar = () => {
             <List>
               <ListItem className="p-0">
                 <Avatar className="bg-blue-600  mr-1 sm:mr-2 w-8 h-8 text-sm">
-                  c
+                  {cookieLoggedInUser.username[0]}
                 </Avatar>
                 <ListItemText
                   primary={

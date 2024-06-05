@@ -22,6 +22,7 @@ const slice = createSlice({
   name: "appSlice",
   initialState: {
     loggedInUser: null,
+    loggedOut: false,
   },
   reducers: {
     setLoggedInUser: (state, action) => {

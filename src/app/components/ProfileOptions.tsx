@@ -1,40 +1,57 @@
 import { List, ListItem, Paper, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Person4Icon from "@mui/icons-material/Person4";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+
+import { notify } from "@/app/helpers/notify";
+import { ToastContainer } from "react-toastify";
+import Link from "next/link";
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 const ProfileOptions = () => {
   const router = useRouter();
+  const [mamba, setMamba] = useState(false);
+  const dis = useDispatch<ThunkDispatch<any, any, any>>();
   //logout
   async function handleLogout() {
     try {
       const res = await axios.get("/api/users/logout");
       console.log("logout res", res);
       if (res.data.statusCode == 200) {
-        setTimeout(() => {
-          router.push("/login");
-        }, 1500);
+        setMamba(true);
       }
     } catch (error: any) {
       console.log(error);
     }
   }
+  useEffect(() => {
+    if (mamba == true) {
+      notify("Mamba Out!", 200);
+      setTimeout(() => {
+        router.push("/login");
+      }, 1500);
+    }
+  }, [mamba]);
   return (
-    <div className="absolute  top-12 left-[-15px] z-10 border border-gray-200">
+    <div className="absolute  top-12 left-[-45px] z-10 border border-gray-200 w-36">
+      <ToastContainer />
       <Paper>
-        <List className=" w-28 m-0 p-0 sm:w-32">
-          <ListItem className="p-2">
-            <Person4Icon className="mr-2" />
-            <Typography sx={{ fontSize: ".8rem" }}>Profile</Typography>
-          </ListItem>
+        <List className="  m-0 p-0">
+          <Link href="/profile">
+            <ListItem className="p-2 hover:bg-gray-100">
+              <Person4Icon className="mx-2" />
+              <Typography sx={{ fontSize: "..9rem" }}>Profile</Typography>
+            </ListItem>
+          </Link>
           <button
             className="cursor-pointer w-full p-0 hover:bg-gray-100"
             onClick={handleLogout}
           >
             <ListItem className="p-2">
-              <LogoutIcon className="mr-2" />
-              <Typography sx={{ fontSize: ".8rem" }}>Logout</Typography>
+              <LogoutIcon className="mx-2" />
+              <Typography sx={{ fontSize: "..9rem" }}>Logout</Typography>
             </ListItem>
           </button>
         </List>
