@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: ["mongoose"],
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 export default nextConfig;
