@@ -8,9 +8,9 @@ export async function connect() {
       console.log("db connected");
     });
     console.log("connecting");
-    conn.on("error", () => {
-      console.log("failed to connect to db");
-    });
+    // conn.on("error", () => {
+    //   console.log("failed to connect to db");
+    // });
   } catch (error: any) {
     console.log(error.msg);
   }
