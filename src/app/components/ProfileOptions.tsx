@@ -12,7 +12,7 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 const ProfileOptions = () => {
   const router = useRouter();
-  const [mamba, setMamba] = useState(false);
+
   const dis = useDispatch<ThunkDispatch<any, any, any>>();
   //logout
   async function handleLogout() {
@@ -20,20 +20,15 @@ const ProfileOptions = () => {
       const res = await axios.get("/api/users/logout");
       console.log("logout res", res);
       if (res.data.statusCode == 200) {
-        setMamba(true);
+        setTimeout(() => {
+          router.push("/login");
+        }, 1500);
       }
     } catch (error: any) {
       console.log(error);
     }
   }
-  useEffect(() => {
-    if (mamba == true) {
-      notify("Mamba Out!", 200);
-      setTimeout(() => {
-        router.push("/login");
-      }, 1500);
-    }
-  }, [mamba]);
+
   return (
     <div className="absolute  top-12 left-[-45px] z-10 border border-gray-200 w-36">
       <ToastContainer />

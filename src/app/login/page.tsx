@@ -54,6 +54,7 @@ const Login = () => {
       <form
         onSubmit={handleSubmit(submit)}
         className="w-3/4 flex flex-col items-center sm:w-96"
+        method="post"
       >
         <Typography variant="h3" className="mb-8">
           Login
