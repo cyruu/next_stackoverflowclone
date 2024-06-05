@@ -3,9 +3,37 @@ import { Button, Typography, Divider } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import { useSelector } from "react-redux";
-const HeaderQuestionBar = () => {
+import axios from "axios";
+const HeaderQuestionBar = ({
+  setTotalPages,
+  setQuestions,
+  setLoading,
+}: any) => {
   const cookieLoggedInUser = useSelector((state: any) => state.loggedInUser);
-
+  async function getNewQuestions() {
+    setLoading(true);
+    const res = await axios.post(`api/questions/getquestions`, {
+      pageNo: 1,
+      // zeroVotes: true,
+    });
+    if (res.data.statusCode == 200) {
+      setTotalPages(res.data.totalPages);
+      setQuestions(res.data.questions);
+      setLoading(false);
+    }
+  }
+  async function getZeroVoteQuestions() {
+    setLoading(true);
+    const res = await axios.post(`api/questions/getquestions`, {
+      pageNo: 1,
+      zeroVotes: true,
+    });
+    if (res.data.statusCode == 200) {
+      setTotalPages(res.data.totalPages);
+      setQuestions(res.data.questions);
+      setLoading(false);
+    }
+  }
   return (
     <div className="px-7 mb-7 sm:p-0">
       {/* text and button */}
@@ -25,10 +53,19 @@ const HeaderQuestionBar = () => {
       <div className="flex justify-between items-center mt-5 ">
         <Typography>213476 questions</Typography>
         <div className="buttons flex justify-between items-center  border border-gray-300 rounded-md p-1">
-          <Button color="inherit" className="p-1 mx-1 text-xs text-gray-500">
+          <Button
+            onClick={getNewQuestions}
+            color="inherit"
+            className="p-1 mx-1 text-xs text-gray-500"
+          >
             Newest
           </Button>
-          <Button color="inherit" className="p-1 mx-1 text-xs text-gray-500">
+
+          <Button
+            onClick={getZeroVoteQuestions}
+            color="inherit"
+            className="p-1 mx-1 text-xs text-gray-500"
+          >
             Unanswered
           </Button>
         </div>

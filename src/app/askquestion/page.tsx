@@ -34,7 +34,7 @@ const AskQuestion = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { errors } = formState;
-  console.log("logged in resux user", loggedInUser);
+  // console.log("logged in resux user", loggedInUser);
 
   const onSubmit = async (data: any) => {
     try {

@@ -45,9 +45,7 @@ const Login = () => {
       console.log(error);
     }
   }
-  useEffect(() => {
-    // getLoggedInUser();
-  }, []);
+
   return (
     <div className="h-[89vh] flex items-center justify-center">
       <ToastContainer />

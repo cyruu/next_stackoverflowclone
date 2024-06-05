@@ -5,15 +5,24 @@ import QuestionsList from "./question/QuestionsList";
 import React, { useEffect, useState } from "react";
 import { Skeleton } from "@mui/material";
 import SkeletonComponent from "./SkeletonComponent";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 const QuestionBar = () => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const limit = Array.from({ length: 4 }, (_, index) => index + 1);
-  async function getInitialQuestions() {
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  async function getInitialQuestions(page: Number) {
     try {
       console.log("getting questions");
-      const res = await axios.get("api/questions/getquestions");
+      setLoading(true);
+      const res = await axios.post(`api/questions/getquestions`, {
+        pageNo: page,
+        // zeroVotes: true,
+      });
       if (res.data.statusCode == 200) {
+        setTotalPages(res.data.totalPages);
         setQuestions(res.data.questions);
         setLoading(false);
       }
@@ -23,18 +32,37 @@ const QuestionBar = () => {
     }
   }
   useEffect(() => {
-    getInitialQuestions();
-  }, []);
+    getInitialQuestions(page);
+  }, [page]);
+
+  const handlePageChange = (event: any, value: any) => {
+    setPage(value);
+  };
   return (
-    <div className="ml-0 sm:ml-10">
-      <HeaderQuestionBar />
+    <div className="ml-0 sm:ml-16">
+      <HeaderQuestionBar
+        setTotalPages={setTotalPages}
+        setQuestions={setQuestions}
+        setLoading={setLoading}
+      />
 
       {loading ? (
         limit.map((ele) => <SkeletonComponent key={ele} />)
       ) : (
         <QuestionsList questions={questions} />
       )}
-      {/* <SkeletonComponent /> */}
+      <div className=" flex justify-center my-16">
+        <Stack className="">
+          <Pagination
+            count={totalPages}
+            variant="outlined"
+            shape="rounded"
+            size="small"
+            page={page}
+            onChange={handlePageChange}
+          />
+        </Stack>
+      </div>
     </div>
   );
 };

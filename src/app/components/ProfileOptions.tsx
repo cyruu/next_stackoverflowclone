@@ -20,9 +20,9 @@ const ProfileOptions = () => {
       const res = await axios.get("/api/users/logout");
       console.log("logout res", res);
       if (res.data.statusCode == 200) {
-        setTimeout(() => {
-          router.push("/login");
-        }, 1500);
+        console.log("go to login");
+
+        router.push("/login");
       }
     } catch (error: any) {
       console.log(error);

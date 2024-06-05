@@ -5,35 +5,54 @@ import { connect } from "@/app/dbConfig/dbConfig";
 import User from "@/app/model/UserModel";
 export const revalidate = 0;
 connect();
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
     console.log("inside api getquesions");
+    const reqBody = await request.json();
+    const { pageNo, zeroVotes = false } = reqBody;
+    const limit = 2;
+    const offset = (pageNo - 1) * limit;
+    // get total questions
 
     // const questions = await Question.find();
-    const questions = await Question.aggregate([
+
+    let pipeline: any[] = [
       {
         $lookup: {
-          // users colleciton ko name
           from: "users",
-          //question ko ma vako userid
           localField: "userId",
-          // users ma vako primary _id
           foreignField: "_id",
-          /// rename gareko
           as: "user",
         },
       },
-      //multiple document lai hataune
       {
         $unwind: "$user",
       },
       {
-        // dont get password from users collection
         $project: {
           "user.password": 0,
         },
       },
-    ]);
+      {
+        $sort: { createdAt: -1 }, // Sort by createdAt field in descending order (newest first)
+      },
+      {
+        $skip: offset,
+      },
+      {
+        $limit: limit,
+      },
+    ];
+    let totalQuestions = 0;
+    if (zeroVotes) {
+      pipeline.push({ $match: { votes: 0 } }); // Add $match stage to filter zero votes at the end of the pipeline
+      totalQuestions = await Question.countDocuments({ votes: 0 });
+    } else {
+      totalQuestions = await Question.countDocuments();
+    }
+    const totalPages = Math.ceil(totalQuestions / limit);
+    // main query to database
+    const questions = await Question.aggregate(pipeline);
     // _id: new mongoose.Types.ObjectId("665ca988a63f57feb0e108f5"),
     // also get the user details to pass it to questons
 
@@ -42,6 +61,7 @@ export async function GET(request: NextRequest) {
         msg: "Questions found",
         statusCode: 200,
         questions,
+        totalPages,
       });
     }
     return NextResponse.json({
