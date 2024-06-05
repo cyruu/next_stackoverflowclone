@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import { connect } from "@/app/dbConfig/dbConfig";
 import User from "@/app/model/UserModel";
+export const revalidate = 0;
 connect();
 export async function GET(request: NextRequest) {
   try {
