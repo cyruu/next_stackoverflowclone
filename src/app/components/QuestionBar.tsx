@@ -26,7 +26,7 @@ const QuestionBar = () => {
     getInitialQuestions();
   }, []);
   return (
-    <div className="ml-10">
+    <div className="ml-0 sm:ml-10">
       <HeaderQuestionBar />
 
       {loading ? (

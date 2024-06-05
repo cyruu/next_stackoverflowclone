@@ -61,7 +61,7 @@ const Question = ({ question }: any) => {
           </Typography>
         </Link>
         <Typography
-          variant="body1"
+          variant="body2"
           sx={{
             display: "-webkit-box",
             WebkitBoxOrient: "vertical",
