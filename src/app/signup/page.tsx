@@ -36,9 +36,7 @@ const Signup = () => {
     } catch (error: any) {
       console.log(error);
     }
-    useEffect(() => {
-      notify("asdsa", 200);
-    }, []);
+
     // const res = await sendEmailVerification();    console.log(res);
   };
   return (
