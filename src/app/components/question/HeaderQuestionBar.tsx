@@ -13,10 +13,12 @@ const HeaderQuestionBar = ({
   setPage,
 }: any) => {
   const cookieLoggedInUser = useSelector((state: any) => state.loggedInUser);
+  console.log("header rendered", filterMode);
 
   function getNewQuestions() {
     setFilterMode("newest");
     setPage(1);
+
     // setLoading(true);
 
     // const res = await axios.post(`api/questions/getquestions`, {
@@ -32,6 +34,7 @@ const HeaderQuestionBar = ({
   function getUnansweredQuestions() {
     setFilterMode("unanswered");
     setPage(1);
+
     // setLoading(true);
     // const res = await axios.post(`api/questions/getquestions`, {
     //   pageNo: 1,
@@ -62,25 +65,23 @@ const HeaderQuestionBar = ({
       <div className="flex justify-between items-center mt-5 ">
         <Typography>213476 questions</Typography>
         <div className="buttons flex justify-between items-center  border border-gray-300 rounded-md p-1">
-          <Button
+          <button
             onClick={getNewQuestions}
-            color="inherit"
-            className={`p-1 mx-1 text-xs text-gray-500${
+            className={`py-1 px-1.5 mr-1 text-xs text-gray-500 rounded  ${
               filterMode == "newest" ? " bg-gray-200 " : ""
             }`}
           >
             Newest
-          </Button>
+          </button>
 
-          <Button
+          <button
             onClick={getUnansweredQuestions}
-            color="inherit"
-            className={`p-1 px-2 mx-1 text-xs text-gray-500${
+            className={`py-1 px-1.5  text-xs text-gray-500 rounded  ${
               filterMode == "unanswered" ? " bg-gray-200 " : ""
             }`}
           >
             Unanswered
-          </Button>
+          </button>
         </div>
       </div>
       <Divider className="mt-4" />
