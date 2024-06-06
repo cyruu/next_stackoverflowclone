@@ -8,6 +8,7 @@ connect();
 export async function POST(request: NextRequest) {
   try {
     console.log("inside api getquesions");
+
     const reqBody = await request.json();
     const { pageNo, filterMode = "newest", searchTerm = "" } = reqBody;
     const limit = 4;

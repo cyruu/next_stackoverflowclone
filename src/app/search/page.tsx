@@ -7,18 +7,11 @@ import QuestionBar from "@/app/components/QuestionBar";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const SearchTerm = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  useEffect(() => {
-    const searchQuery = useSearchParams();
-
-    const search = String(searchQuery);
-    const realSearchTerm = search.split("=")[1];
-    setSearchTerm(searchTerm);
-  }, []);
+  let searchParams = useSearchParams();
+  const searchTerm = searchParams.get("q");
 
   return (
     <>
-      {/* <h1>{searchTerm}</h1> */}
       <Grid container>
         <Grid item sm={2} className="hidden sm:flex">
           <LeftSideBar />

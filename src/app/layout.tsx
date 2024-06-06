@@ -6,6 +6,7 @@ import { ThemeProvider } from "@emotion/react";
 import theme from "@/materialUI/theme";
 import Navbar from "@/app/components/Navbar";
 import { store } from "./slices/store";
+import { Suspense } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 // export const metadata: Metadata = {
@@ -22,10 +23,12 @@ export default function RootLayout({
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <html lang="en">
-          <body className={inter.className}>
-            <Navbar />
-            {children}
-          </body>
+          <Suspense fallback={<div>Loading...</div>}>
+            <body className={inter.className}>
+              <Navbar />
+              {children}
+            </body>
+          </Suspense>
         </html>
       </ThemeProvider>
     </Provider>
