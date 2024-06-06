@@ -8,7 +8,7 @@ import SkeletonComponent from "./SkeletonComponent";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import PaginationSkeleton from "./PaginationSkeleton";
-const QuestionBar = () => {
+const QuestionBar = ({ searchTerm }: any) => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterMode, setFilterMode] = useState("newest");
@@ -19,10 +19,12 @@ const QuestionBar = () => {
   async function getInitialQuestions(page: Number) {
     try {
       console.log("getting questions");
+
       setLoading(true);
       const res = await axios.post(`api/questions/getquestions`, {
         pageNo: page,
         filterMode,
+        searchTerm,
         // zeroVotes: true,
       });
       if (res.data.statusCode == 200) {
@@ -48,7 +50,9 @@ const QuestionBar = () => {
       <HeaderQuestionBar
         setTotalPages={setTotalPages}
         setQuestions={setQuestions}
-        setLoading={setLoading}
+        // setLoading={setLoading}
+        searchTerm={searchTerm}
+        loading={loading}
         setPage={setPage}
         filterMode={filterMode}
         setFilterMode={setFilterMode}
@@ -62,11 +66,11 @@ const QuestionBar = () => {
           ))}
           <PaginationSkeleton />
         </div>
-      ) : (
+      ) : questionsFound > 0 ? (
         <>
           <QuestionsList questions={questions} />
           <div className=" flex justify-center my-16">
-            <Stack className="">
+            <Stack spacing={2} className="">
               <Pagination
                 count={totalPages}
                 variant="outlined"
@@ -78,6 +82,8 @@ const QuestionBar = () => {
             </Stack>
           </div>
         </>
+      ) : (
+        <div className="text-center">No Result Found</div>
       )}
     </div>
   );

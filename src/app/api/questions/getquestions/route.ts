@@ -9,8 +9,9 @@ export async function POST(request: NextRequest) {
   try {
     console.log("inside api getquesions");
     const reqBody = await request.json();
-    const { pageNo, filterMode } = reqBody;
+    const { pageNo, filterMode = "newest", searchTerm = "" } = reqBody;
     const limit = 4;
+
     let offset = (pageNo - 1) * limit;
     // get total questions
 
@@ -39,7 +40,23 @@ export async function POST(request: NextRequest) {
     ];
     let totalQuestions = 0;
     if (filterMode == "unanswered") {
-      pipeline.push({ $match: { ansCount: 0 } });
+      if (searchTerm) {
+        pipeline.push({
+          $match: {
+            ansCount: 0,
+            title: { $regex: searchTerm, $options: "i" },
+          },
+        });
+        totalQuestions = await Question.countDocuments({
+          ansCount: 0,
+          title: { $regex: searchTerm, $options: "i" },
+        });
+      }
+      // no serach term
+      else {
+        pipeline.push({ $match: { ansCount: 0 } });
+        totalQuestions = await Question.countDocuments({ ansCount: 0 });
+      }
       // limit chain kina vane limit 3 halda newest ma tintai thyo
       // tara unanswered ma 2 ota matra aaira thyo
       pipeline.push({
@@ -49,17 +66,31 @@ export async function POST(request: NextRequest) {
         $limit: limit,
       });
       // offset = (pageNo - 1) * (limit + 1);
-      totalQuestions = await Question.countDocuments({ ansCount: 0 });
-    } else {
+    }
+    // newest
+    else {
+      if (searchTerm) {
+        pipeline.push({
+          $match: {
+            title: { $regex: searchTerm, $options: "i" },
+          },
+        });
+        totalQuestions = await Question.countDocuments({
+          title: { $regex: searchTerm, $options: "i" },
+        });
+      }
+      // no search term
+      else {
+        totalQuestions = await Question.countDocuments();
+      }
       pipeline.push({
         $skip: offset,
       });
       pipeline.push({
         $limit: limit,
       });
-
-      totalQuestions = await Question.countDocuments();
     }
+
     const totalPages = Math.ceil(totalQuestions / limit);
 
     // main query to database

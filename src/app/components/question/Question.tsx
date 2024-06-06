@@ -21,6 +21,8 @@ const Question = ({ question }: any) => {
   const year = date.getFullYear();
   const month = date.getMonth();
   const day = date.getDay();
+  const hour = date.getHours();
+  const minutes = date.getMinutes();
   // get user data
   const { username, email } = user;
   // async function getQuestionUserData() {
@@ -75,7 +77,7 @@ const Question = ({ question }: any) => {
           {details}
         </Typography>
         <div className="footer mt-2">
-          <div className="flex justify-end  items-center">
+          <div className="flex justify-between items-center">
             <div
               style={{ fontSize: ".8rem" }}
               className=" flex items-center text-gray-500"
@@ -88,19 +90,20 @@ const Question = ({ question }: any) => {
                   justifyContent: "center",
                   alignItems: "center",
                   color: "white",
-                  fontSize: ".5rem",
+                  fontSize: ".7rem",
+                  borderRadius: "50%",
                 }}
                 className="mr-1 bg-green-600 "
               >
                 <p>{username[0].toUpperCase()}</p>
               </div>
-              {username} at
+              {username}
             </div>
             <Typography
               sx={{ fontSize: ".8rem" }}
               className="text-gray-500 ml-1"
             >
-              {year}/{month}/{day}
+              {year}/{month}/{day} at {hour}:{minutes}
             </Typography>
           </div>
         </div>

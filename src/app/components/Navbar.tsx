@@ -5,6 +5,7 @@ import queryLogo from "@/images/querylogo.png";
 import Dropdown from "./Dropdown";
 import { usePathname } from "next/navigation";
 import ProfileOptions from "./ProfileOptions";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 // components from material ui
 import {
   ListItem,
@@ -19,9 +20,11 @@ import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { ThunkDispatch } from "@reduxjs/toolkit";
+
 import { getCookieUser, setLoggedInUser } from "../slices/appSlice";
 import { notify } from "@/app/helpers/notify";
 import { ToastContainer } from "react-toastify";
+import MoblieSearch from "./MoblieSearch";
 
 const Navbar = () => {
   const path = usePathname();
@@ -75,7 +78,10 @@ const Navbar = () => {
     // getUser();
     // yo async thunk dispatch garda refresh garda loggedInUser false in thyo
     // dis(getCookieUser());
-    if (path == "/questions" && window.innerWidth > 640) {
+    if (
+      (path == "/questions" || /^\/search(\?.*)?$/.test(path)) &&
+      window.innerWidth > 640
+    ) {
       setShowBurger(false);
     } else {
       setShowBurger(true);
@@ -93,10 +99,18 @@ const Navbar = () => {
           <Image src={queryLogo} className="w-28 sm:w-32" alt={""} />
         </Link>
       </div>
+
       <div className="searchBar flex-1 flex justify-center hidden whitespace-nowrap sm:flex">
-        <form className="w-[60%] border border-gray-300 rounded-md py-1 px-1">
+        <form
+          className="w-[60%] border border-gray-300 rounded-md py-1 px-1"
+          action="/search"
+        >
           <SearchIcon className="mx-1" />
-          <input type="text" className="outline-none w-[80%]" />
+          <input
+            type="text"
+            className="outline-none w-[80%] text-sm text-gray-600"
+            name="q"
+          />
         </form>
       </div>
       {cookieLoggedInUser ? (
@@ -114,9 +128,9 @@ const Navbar = () => {
           >
             <List>
               <ListItem className="p-0">
-                <Avatar className="bg-blue-600  mr-1 sm:mr-2 w-8 h-8 text-sm">
+                <div className="bg-blue-600 flex justify-center items-center mr-1.5 text-white h-[28px] w-[28px] rounded-full text-lg pb-1 sm:h-[30px] w-[30px] text-sm   ">
                   {cookieLoggedInUser.username[0]}
-                </Avatar>
+                </div>
                 <ListItemText
                   primary={
                     <>
@@ -127,6 +141,7 @@ const Navbar = () => {
                   }
                   sx={{ fontSize: "20px" }}
                 />
+                <ArrowDropDownIcon className="text-lg ml-1" />
               </ListItem>
             </List>
           </button>
@@ -150,6 +165,9 @@ const Navbar = () => {
           </Button>
         </div>
       )}
+      <div className="sm:hidden">
+        <MoblieSearch />
+      </div>
     </nav>
   );
 };

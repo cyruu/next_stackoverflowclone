@@ -1,13 +1,15 @@
 "use client";
-import { Button, Typography, Divider } from "@mui/material";
+import { Button, Typography, Divider, Skeleton } from "@mui/material";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import SkeletonComponent from "../SkeletonComponent";
 const HeaderQuestionBar = ({
   setTotalPages,
   setQuestions,
-  setLoading,
+  loading,
+  searchTerm,
   filterMode,
   setFilterMode,
   setPage,
@@ -48,7 +50,7 @@ const HeaderQuestionBar = ({
     // }
   }
   return (
-    <div className="px-7 mb-7 sm:p-0">
+    <div className="px-7 mb-16  sm:p-0">
       {/* text and button */}
       <div className="flex justify-between mt-5 ">
         <header>
@@ -61,10 +63,19 @@ const HeaderQuestionBar = ({
           </Button>
         </Link>
       </div>
+      {searchTerm ? (
+        <div className="search text-xs mt-2">Search for "{searchTerm}"</div>
+      ) : (
+        ""
+      )}
 
       {/* count and options */}
-      <div className="flex justify-between items-center mt-5 ">
-        <Typography>{questionsFound} questions</Typography>
+      <div className="flex justify-between items-center mt-5 mb-3 ">
+        {loading ? (
+          <Skeleton className="w-24" />
+        ) : (
+          <Typography>{questionsFound} questions</Typography>
+        )}
         <div className="buttons flex justify-between items-center  border border-gray-300 rounded-md p-1">
           <button
             onClick={getNewQuestions}
@@ -85,7 +96,7 @@ const HeaderQuestionBar = ({
           </button>
         </div>
       </div>
-      <Divider className="mt-4" />
+      <Divider className="" />
     </div>
   );
 };

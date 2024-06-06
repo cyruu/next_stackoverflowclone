@@ -9,7 +9,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import HomeIcon from "@mui/icons-material/Home";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
-
+import SearchIcon from "@mui/icons-material/Search";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
