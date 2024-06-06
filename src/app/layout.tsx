@@ -23,12 +23,10 @@ export default function RootLayout({
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <html lang="en">
-          <Suspense fallback={<div>Loading...</div>}>
-            <body className={inter.className}>
-              <Navbar />
-              {children}
-            </body>
-          </Suspense>
+          <body className={inter.className}>
+            <Navbar />
+            {children}
+          </body>
         </html>
       </ThemeProvider>
     </Provider>
