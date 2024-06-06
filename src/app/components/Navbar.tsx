@@ -58,7 +58,7 @@ const Navbar = () => {
   // };
   async function getLoggedInUser() {
     try {
-      const res = await axios.get("api/users/getLoggedInUser");
+      const res = await axios.get(`api/users/getLoggedInUser`);
       const user = res.data.loggedInUser;
       // setCookieLoggedInUser(user);
       dis(setLoggedInUser({ loggedInUser: user }));
@@ -79,10 +79,7 @@ const Navbar = () => {
     // getUser();
     // yo async thunk dispatch garda refresh garda loggedInUser false in thyo
     // dis(getCookieUser());
-    if (
-      (path == "/questions" || /^\/search(\?.*)?$/.test(path)) &&
-      window.innerWidth > 640
-    ) {
+    if (path == "/questions" && window.innerWidth > 640) {
       setShowBurger(false);
     } else {
       setShowBurger(true);
