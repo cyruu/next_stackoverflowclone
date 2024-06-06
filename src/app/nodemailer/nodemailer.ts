@@ -129,7 +129,8 @@ export async function sendEmailVerification({ email, id, emailType }: any) {
       },
     });
     const options = {
-      from: process.env.GMAIL_EMAIL_ADDRESS, // sender address
+      // from: process.env.GMAIL_EMAIL_ADDRESS, // sender address
+      from: "query@gmail.com", // sender address
       to: email, // list of receivers
       subject:
         emailType == verificationType.emailVerification
