@@ -25,14 +25,15 @@ import { getCookieUser, setLoggedInUser } from "../slices/appSlice";
 import { notify } from "@/app/helpers/notify";
 import { ToastContainer } from "react-toastify";
 import MoblieSearch from "./MoblieSearch";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const path = usePathname();
-
+  const router = useRouter();
   const dis = useDispatch<ThunkDispatch<any, any, any>>();
   const [showBurger, setShowBurger] = useState(false);
   const [showProfileOptions, setShowProfileOptions] = useState(false);
-
+  const [searchTerm, setSearchTerm] = useState("");
   // const [cookieLoggedInUser, setCookieLoggedInUser] = useState({});
   const cookieLoggedInUser = useSelector((state: any) => state.loggedInUser);
 
@@ -103,13 +104,18 @@ const Navbar = () => {
       <div className="searchBar flex-1 flex justify-center hidden whitespace-nowrap sm:flex">
         <form
           className="w-[60%] border border-gray-300 rounded-md py-1 px-1"
-          action="/search"
+          onSubmit={(e) => {
+            e.preventDefault();
+
+            window.location.href = `/search?q=${searchTerm}`;
+          }}
         >
           <SearchIcon className="mx-1" />
           <input
             type="text"
             className="outline-none w-[80%] text-sm text-gray-600"
-            name="q"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </form>
       </div>
