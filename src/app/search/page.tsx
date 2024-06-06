@@ -7,10 +7,14 @@ import QuestionBar from "@/app/components/QuestionBar";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const SearchTerm = () => {
-  const searchQuery = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState("");
+  useEffect(() => {
+    const searchQuery = useSearchParams();
 
-  const search = String(searchQuery);
-  const searchTerm = search.split("=")[1];
+    const search = String(searchQuery);
+    const realSearchTerm = search.split("=")[1];
+    setSearchTerm(searchTerm);
+  }, []);
 
   return (
     <>
