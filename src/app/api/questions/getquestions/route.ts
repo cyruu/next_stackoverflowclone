@@ -9,9 +9,9 @@ export async function POST(request: NextRequest) {
   try {
     console.log("inside api getquesions");
     const reqBody = await request.json();
-    const { pageNo, zeroVotes = false } = reqBody;
-    const limit = 2;
-    const offset = (pageNo - 1) * limit;
+    const { pageNo, filterMode } = reqBody;
+    const limit = 4;
+    let offset = (pageNo - 1) * limit;
     // get total questions
 
     // const questions = await Question.find();
@@ -36,23 +36,35 @@ export async function POST(request: NextRequest) {
       {
         $sort: { createdAt: -1 }, // Sort by createdAt field in descending order (newest first)
       },
-      {
-        $skip: offset,
-      },
-      {
-        $limit: limit,
-      },
     ];
     let totalQuestions = 0;
-    if (zeroVotes) {
-      pipeline.push({ $match: { votes: 0 } }); // Add $match stage to filter zero votes at the end of the pipeline
-      totalQuestions = await Question.countDocuments({ votes: 0 });
+    if (filterMode == "unanswered") {
+      pipeline.push({ $match: { ansCount: 0 } });
+      // limit chain kina vane limit 3 halda newest ma tintai thyo
+      // tara unanswered ma 2 ota matra aaira thyo
+      pipeline.push({
+        $skip: offset,
+      });
+      pipeline.push({
+        $limit: limit,
+      });
+      // offset = (pageNo - 1) * (limit + 1);
+      totalQuestions = await Question.countDocuments({ ansCount: 0 });
     } else {
+      pipeline.push({
+        $skip: offset,
+      });
+      pipeline.push({
+        $limit: limit,
+      });
+
       totalQuestions = await Question.countDocuments();
     }
     const totalPages = Math.ceil(totalQuestions / limit);
+
     // main query to database
     const questions = await Question.aggregate(pipeline);
+    console.log("total questions found", filterMode, totalQuestions, questions);
     // _id: new mongoose.Types.ObjectId("665ca988a63f57feb0e108f5"),
     // also get the user details to pass it to questons
 

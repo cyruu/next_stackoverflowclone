@@ -1,7 +1,7 @@
 "use client";
 import { Button, Typography, Divider } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 const HeaderQuestionBar = ({
@@ -10,34 +10,38 @@ const HeaderQuestionBar = ({
   setLoading,
   filterMode,
   setFilterMode,
+  setPage,
 }: any) => {
   const cookieLoggedInUser = useSelector((state: any) => state.loggedInUser);
-  async function getNewQuestions() {
-    setFilterMode("newest");
-    setLoading(true);
 
-    const res = await axios.post(`api/questions/getquestions`, {
-      pageNo: 1,
-      // zeroVotes: true,
-    });
-    if (res.data.statusCode == 200) {
-      setTotalPages(res.data.totalPages);
-      setQuestions(res.data.questions);
-      setLoading(false);
-    }
+  function getNewQuestions() {
+    setFilterMode("newest");
+    setPage(1);
+    // setLoading(true);
+
+    // const res = await axios.post(`api/questions/getquestions`, {
+    //   pageNo: 1,
+    //   // zeroVotes: true,
+    // });
+    // if (res.data.statusCode == 200) {
+    //   setTotalPages(res.data.totalPages);
+    //   setQuestions(res.data.questions);
+    //   setLoading(false);
+    // }
   }
-  async function getZeroVoteQuestions() {
+  function getUnansweredQuestions() {
     setFilterMode("unanswered");
-    setLoading(true);
-    const res = await axios.post(`api/questions/getquestions`, {
-      pageNo: 1,
-      zeroVotes: true,
-    });
-    if (res.data.statusCode == 200) {
-      setTotalPages(res.data.totalPages);
-      setQuestions(res.data.questions);
-      setLoading(false);
-    }
+    setPage(1);
+    // setLoading(true);
+    // const res = await axios.post(`api/questions/getquestions`, {
+    //   pageNo: 1,
+    //   zeroVotes: true,
+    // });
+    // if (res.data.statusCode == 200) {
+    //   setTotalPages(res.data.totalPages);
+    //   setQuestions(res.data.questions);
+    //   setLoading(false);
+    // }
   }
   return (
     <div className="px-7 mb-7 sm:p-0">
@@ -69,7 +73,7 @@ const HeaderQuestionBar = ({
           </Button>
 
           <Button
-            onClick={getZeroVoteQuestions}
+            onClick={getUnansweredQuestions}
             color="inherit"
             className={`p-1 px-2 mx-1 text-xs text-gray-500${
               filterMode == "unanswered" ? " bg-gray-200 " : ""

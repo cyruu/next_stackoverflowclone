@@ -21,6 +21,7 @@ const QuestionBar = () => {
       setLoading(true);
       const res = await axios.post(`api/questions/getquestions`, {
         pageNo: page,
+        filterMode,
         // zeroVotes: true,
       });
       if (res.data.statusCode == 200) {
@@ -35,7 +36,7 @@ const QuestionBar = () => {
   }
   useEffect(() => {
     getInitialQuestions(page);
-  }, [page]);
+  }, [page, filterMode]);
 
   const handlePageChange = (event: any, value: any) => {
     setPage(value);
@@ -46,6 +47,7 @@ const QuestionBar = () => {
         setTotalPages={setTotalPages}
         setQuestions={setQuestions}
         setLoading={setLoading}
+        setPage={setPage}
         filterMode={filterMode}
         setFilterMode={setFilterMode}
       />
