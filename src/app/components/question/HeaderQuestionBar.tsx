@@ -64,7 +64,9 @@ const HeaderQuestionBar = ({
         </Link>
       </div>
       {searchTerm ? (
-        <div className="search text-xs mt-2">Search for "{searchTerm}"</div>
+        <div className="search text-xs mt-2 w-full flex flex-wrap">
+          Search for &quot;{searchTerm}&quot;.
+        </div>
       ) : (
         ""
       )}
