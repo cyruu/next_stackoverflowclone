@@ -11,6 +11,7 @@ const HeaderQuestionBar = ({
   filterMode,
   setFilterMode,
   setPage,
+  questionsFound,
 }: any) => {
   const cookieLoggedInUser = useSelector((state: any) => state.loggedInUser);
   console.log("header rendered", filterMode);
@@ -63,7 +64,7 @@ const HeaderQuestionBar = ({
 
       {/* count and options */}
       <div className="flex justify-between items-center mt-5 ">
-        <Typography>213476 questions</Typography>
+        <Typography>{questionsFound} questions</Typography>
         <div className="buttons flex justify-between items-center  border border-gray-300 rounded-md p-1">
           <button
             onClick={getNewQuestions}

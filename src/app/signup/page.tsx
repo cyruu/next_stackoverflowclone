@@ -29,7 +29,7 @@ const Signup = () => {
       notify(res.data.msg, res.data.statusCode);
       if (res.data.statusCode == 200) {
         setTimeout(() => {
-          router.push("/login");
+          router.push("/signupsuccess");
         }, 1000);
       }
       setLoading(false);

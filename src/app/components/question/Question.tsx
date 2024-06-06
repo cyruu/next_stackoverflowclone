@@ -80,12 +80,20 @@ const Question = ({ question }: any) => {
               style={{ fontSize: ".8rem" }}
               className=" flex items-center text-gray-500"
             >
-              <Avatar
-                sx={{ height: "20px", width: "20px" }}
-                className="mr-1 text-sm bg-green-600 "
+              <div
+                style={{
+                  height: "20px",
+                  width: "20px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "white",
+                  fontSize: ".5rem",
+                }}
+                className="mr-1 bg-green-600 "
               >
-                {username[0]}
-              </Avatar>
+                <p>{username[0].toUpperCase()}</p>
+              </div>
               {username} at
             </div>
             <Typography

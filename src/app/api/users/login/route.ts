@@ -18,8 +18,13 @@ export async function POST(request: NextRequest) {
     });
     // const convertedRes = JSON.parse()
     console.log("in login route response", res);
-
-    return NextResponse.json({ msg: "Login Successful", statusCode: 200 });
+    if (res) {
+      return NextResponse.json({ msg: "Login Successful", statusCode: 200 });
+    }
+    return NextResponse.json({
+      msg: "Incorrect credentials in login",
+      statusCode: 404,
+    });
     // const loggedInUser = await User.findOne({ email, isVerified: true });
     // // user not found
     // if (!loggedInUser) {

@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
 
     // main query to database
     const questions = await Question.aggregate(pipeline);
-    console.log("total questions found", filterMode, totalQuestions, questions);
+
     // _id: new mongoose.Types.ObjectId("665ca988a63f57feb0e108f5"),
     // also get the user details to pass it to questons
 
@@ -74,6 +74,7 @@ export async function POST(request: NextRequest) {
         statusCode: 200,
         questions,
         totalPages,
+        totalQuestions,
       });
     }
     return NextResponse.json({

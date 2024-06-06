@@ -26,10 +26,14 @@ const Login = () => {
   const submit = async (data: formValues) => {
     setLoading(true);
     const res = await axios.post("/api/users/login", data);
-    notify(res.data.msg, res.data.statusCode);
-    setTimeout(() => {
-      router.push("/questions");
-    }, 1000);
+    if (res.data.statusCode == 200) {
+      notify(res.data.msg, res.data.statusCode);
+      setTimeout(() => {
+        router.push("/questions");
+      }, 1000);
+    } else {
+      notify("Invalid Credentials! Try Verifying your email.", 404);
+    }
     setLoading(false);
   };
   async function getLoggedInUser() {

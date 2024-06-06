@@ -12,6 +12,7 @@ const QuestionBar = () => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterMode, setFilterMode] = useState("newest");
+  const [questionsFound, setQuestionsFound] = useState(0);
   const limit = Array.from({ length: 4 }, (_, index) => index + 1);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -27,6 +28,7 @@ const QuestionBar = () => {
       if (res.data.statusCode == 200) {
         setTotalPages(res.data.totalPages);
         setQuestions(res.data.questions);
+        setQuestionsFound(res.data.totalQuestions);
         setLoading(false);
       }
       console.log("question response", res);
@@ -50,6 +52,7 @@ const QuestionBar = () => {
         setPage={setPage}
         filterMode={filterMode}
         setFilterMode={setFilterMode}
+        questionsFound={questionsFound}
       />
 
       {loading ? (
