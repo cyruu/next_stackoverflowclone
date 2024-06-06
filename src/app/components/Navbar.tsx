@@ -27,7 +27,7 @@ const Navbar = () => {
   const path = usePathname();
 
   const dis = useDispatch<ThunkDispatch<any, any, any>>();
-
+  const [showBurger, setShowBurger] = useState(false);
   const [showProfileOptions, setShowProfileOptions] = useState(false);
 
   // const [cookieLoggedInUser, setCookieLoggedInUser] = useState({});
@@ -75,6 +75,11 @@ const Navbar = () => {
     // getUser();
     // yo async thunk dispatch garda refresh garda loggedInUser false in thyo
     // dis(getCookieUser());
+    if (path == "/questions" && window.innerWidth > 640) {
+      setShowBurger(false);
+    } else {
+      setShowBurger(true);
+    }
   }, [path]);
   return (
     <nav
@@ -83,7 +88,7 @@ const Navbar = () => {
     >
       <div className="flex items-center">
         <ToastContainer />
-        <Dropdown />
+        {showBurger ? <Dropdown /> : ""}
         <Link href="/">
           <Image src={queryLogo} className="w-28 sm:w-32" alt={""} />
         </Link>

@@ -1,11 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import List from "@mui/material/List";
-import { ListItemText, ListItem, Paper } from "@mui/material";
+import { ListItemText, ListItem, Paper, Typography } from "@mui/material";
 import QuizIcon from "@mui/icons-material/Quiz";
 import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
+import HomeIcon from "@mui/icons-material/Home";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 
 import Link from "next/link";
@@ -40,14 +42,29 @@ const Dropdown = () => {
           component="nav"
         >
           <Paper>
+            <Link href="/">
+              <ListItem className="p-1 hover:bg-gray-100">
+                <HomeIcon className="p-0 w-max mx-2" />
+                <ListItemText primary="Home" />
+              </ListItem>
+            </Link>
             <Link href="questions">
-              <ListItem className="p-2 hover:bg-gray-100">
+              <ListItem className="p-1 hover:bg-gray-100">
                 {/* <ListItemIcon > */}
                 <QuizIcon className="p-0 w-max mx-2" />
                 {/* </ListItemIcon> */}
                 <ListItemText primary="Questions" />
               </ListItem>
             </Link>
+            {/* <div className="mobileoptions sm:hidden"> */}
+
+            <Link href="saves">
+              <ListItem className="p-1 hover:bg-gray-100">
+                <BookmarkIcon className="p-0 w-max mx-2" />
+                <ListItemText primary="Saves" />
+              </ListItem>
+            </Link>
+            {/* </div> */}
 
             {/*  login logout */}
             {loggedInUser ? (
@@ -55,7 +72,7 @@ const Dropdown = () => {
             ) : (
               <>
                 <Link href="/login">
-                  <ListItem className="p-2 hover:bg-gray-100">
+                  <ListItem className="p-1 hover:bg-gray-100">
                     {/* <ListItemIcon > */}
                     <LoginIcon className="p-0 w-max mx-2" />
                     {/* </ListItemIcon> */}
@@ -63,7 +80,7 @@ const Dropdown = () => {
                   </ListItem>
                 </Link>
                 <Link href="/signup">
-                  <ListItem className="p-2 hover:bg-gray-100">
+                  <ListItem className="p-1 hover:bg-gray-100">
                     {/* <ListItemIcon > */}
                     <AddBoxOutlinedIcon className="p-0 w-max mx-2" />
                     {/* </ListItemIcon> */}

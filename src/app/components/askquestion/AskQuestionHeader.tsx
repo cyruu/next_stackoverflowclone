@@ -15,10 +15,10 @@ const AskQuestionHeader = () => {
           className="bg-blue-50 p-2 border border-blue-300 sm:p-4 "
           elevation={0}
         >
-          <Typography variant="h6" className="mb-2">
+          <Typography variant="body1" className="mb-2 font-bold">
             Writing a good question
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body2">
             You’re ready to ask a programming-related question and this form
             will help guide you through the process.
           </Typography>

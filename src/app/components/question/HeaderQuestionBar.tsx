@@ -8,10 +8,14 @@ const HeaderQuestionBar = ({
   setTotalPages,
   setQuestions,
   setLoading,
+  filterMode,
+  setFilterMode,
 }: any) => {
   const cookieLoggedInUser = useSelector((state: any) => state.loggedInUser);
   async function getNewQuestions() {
+    setFilterMode("newest");
     setLoading(true);
+
     const res = await axios.post(`api/questions/getquestions`, {
       pageNo: 1,
       // zeroVotes: true,
@@ -23,6 +27,7 @@ const HeaderQuestionBar = ({
     }
   }
   async function getZeroVoteQuestions() {
+    setFilterMode("unanswered");
     setLoading(true);
     const res = await axios.post(`api/questions/getquestions`, {
       pageNo: 1,
@@ -56,7 +61,9 @@ const HeaderQuestionBar = ({
           <Button
             onClick={getNewQuestions}
             color="inherit"
-            className="p-1 mx-1 text-xs text-gray-500"
+            className={`p-1 mx-1 text-xs text-gray-500${
+              filterMode == "newest" ? " bg-gray-200 " : ""
+            }`}
           >
             Newest
           </Button>
@@ -64,7 +71,9 @@ const HeaderQuestionBar = ({
           <Button
             onClick={getZeroVoteQuestions}
             color="inherit"
-            className="p-1 mx-1 text-xs text-gray-500"
+            className={`p-1 px-2 mx-1 text-xs text-gray-500${
+              filterMode == "unanswered" ? " bg-gray-200 " : ""
+            }`}
           >
             Unanswered
           </Button>

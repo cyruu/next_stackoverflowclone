@@ -8,6 +8,7 @@ export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   const isPublic = path == "/login" || path == "/signup";
+  // login cha login signup ma jana khojiracha
   if (cookieUser && isPublic) {
     console.log(
       "login cha public page jana mildaina, redireting to questions",
@@ -17,11 +18,12 @@ export function middleware(request: NextRequest) {
 
     return NextResponse.redirect(new URL("/questions", request.url));
   }
-  if (!cookieUser && !isPublic) {
-    console.log("login chaina private mildaina", path, cookieUser);
+  // login chaina login signup bahek jana khojiracha
+  // if (!cookieUser && !isPublic) {
+  //   console.log("login chaina private mildaina", path, cookieUser);
 
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
+  //   return NextResponse.redirect(new URL("/questions", request.url));
+  // }
 
   // Call the auth middleware
   //   auth(request);
