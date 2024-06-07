@@ -31,7 +31,7 @@ const Dropdown = () => {
         onBlur={() => {
           setTimeout(() => {
             setShowdropdown(false);
-          }, 100);
+          }, 500);
         }}
       >
         <MenuIcon className="mx-4 cursor-pointer" sx={{ fontSize: "1.8rem" }} />

@@ -104,7 +104,8 @@ const Navbar = () => {
           onSubmit={(e) => {
             e.preventDefault();
 
-            window.location.href = `/search?q=${searchTerm}`;
+            // window.location.href = `/search?q=${searchTerm}`;
+            router.push(`/search?q=${searchTerm}`);
           }}
         >
           <SearchIcon className="mx-1" />
@@ -126,7 +127,7 @@ const Navbar = () => {
             onBlur={() => {
               setTimeout(() => {
                 setShowProfileOptions(false);
-              }, 100);
+              }, 500);
             }}
           >
             <List>
