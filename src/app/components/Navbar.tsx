@@ -96,7 +96,7 @@ const Navbar = () => {
         <Link href="/">
           <Image
             src={queryLogo}
-            className="w-28 sm:w-32"
+            className="w-28 ml-14 sm:w-32"
             alt={""}
             priority={true}
           />

@@ -22,7 +22,7 @@ const Dropdown = () => {
   const loggedInUser = useSelector((state: any) => state.loggedInUser);
 
   return (
-    <div className="">
+    <div className="absolute">
       {/* <div className="dropdownLinks absolute top-20 bg-white w-44"> */}
       <button
         onFocus={() => {
@@ -38,7 +38,7 @@ const Dropdown = () => {
       </button>
       {showDropdown ? (
         <List
-          className="w-44 absolute top-20 p-0 border border-gray-200 z-10"
+          className="w-44 absolute top-14 p-0 border border-gray-200 z-10 "
           component="nav"
         >
           <Paper>
