@@ -30,7 +30,7 @@ const ProfileOptions = () => {
   }
 
   return (
-    <div className="absolute top-16 left-[-20px] z-10 border border-gray-200 w-36">
+    <div className="absolute top-16 left-[-20px] z-10 border border-gray-200 w-36 sm:left-[10px]">
       <Paper>
         <List className="  m-0 p-0">
           <Link href="/profile">
