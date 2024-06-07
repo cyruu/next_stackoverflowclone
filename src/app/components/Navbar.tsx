@@ -58,7 +58,12 @@ const Navbar = () => {
   // };
   async function getLoggedInUser() {
     try {
-      const res = await axios.get(`api/users/getLoggedInUser`);
+      // const res = await axios.get(
+      //   `http://localhost:3000/api/users/getLoggedInUser`
+      // );
+      const res = await axios.get(
+        `${process.env.HOSTED_DOMAIN}/api/users/getLoggedInUser`
+      );
       const user = res.data.loggedInUser;
       // setCookieLoggedInUser(user);
       dis(setLoggedInUser({ loggedInUser: user }));
@@ -73,13 +78,17 @@ const Navbar = () => {
   // }, [logoutStatus]);
   useEffect(() => {
     console.log("navbar mount, checking for cookie");
+
     // notify("mamba out", 200);
     getLoggedInUser();
 
     // getUser();
     // yo async thunk dispatch garda refresh garda loggedInUser false in thyo
     // dis(getCookieUser());
-    if (path == "/questions" && window.innerWidth > 640) {
+    if (
+      (path == "/questions" || path.match(/^\/questions\/.*$/)) &&
+      window.innerWidth > 640
+    ) {
       setShowBurger(false);
     } else {
       setShowBurger(true);

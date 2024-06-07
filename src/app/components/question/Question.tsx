@@ -57,7 +57,7 @@ const Question = ({ question }: any) => {
         </Typography>
       </div>
       <div className="questiondetails  flex-1 w-full">
-        <Link href="/questions">
+        <Link href={`/questions/${_id}`}>
           <Typography className="text-blue-500" sx={{ fontSize: "1.2rem" }}>
             {title}
           </Typography>

@@ -38,7 +38,7 @@ const Dropdown = () => {
       </button>
       {showDropdown ? (
         <List
-          className="w-44 absolute top-24 p-0 border border-gray-200 z-10 sm:top-14 "
+          className="w-44 absolute top-20 p-0 border border-gray-200 z-10 sm:top-14 "
           component="nav"
         >
           <Paper>
@@ -48,7 +48,7 @@ const Dropdown = () => {
                 <ListItemText primary="Home" />
               </ListItem>
             </Link>
-            <Link href="questions">
+            <Link href="/questions">
               <ListItem className="p-1 hover:bg-gray-100">
                 {/* <ListItemIcon > */}
                 <QuizIcon className="p-0 w-max mx-2" />
@@ -58,7 +58,7 @@ const Dropdown = () => {
             </Link>
             {/* <div className="mobileoptions sm:hidden"> */}
 
-            <Link href="saves">
+            <Link href="/saves">
               <ListItem className="p-1 hover:bg-gray-100">
                 <BookmarkIcon className="p-0 w-max mx-2" />
                 <ListItemText primary="Saves" />

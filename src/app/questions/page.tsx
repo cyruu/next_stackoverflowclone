@@ -6,7 +6,7 @@ import RightSideBar from "../components/RightSideBar";
 import QuestionBar from "../components/QuestionBar";
 
 import { Grid } from "@mui/material";
-const drawerWidth = 240;
+
 const Questions = () => {
   const loggedInUser = useSelector((state: any) => state.loggedInUser);
 

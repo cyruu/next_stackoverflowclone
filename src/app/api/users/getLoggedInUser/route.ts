@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
   //   const user = session?.user;
   //   console.log("session user from page.tsx", user);
   const userCookie = cookies().get("authjs.session-token");
-  console.log("cookies form page.tsx", userCookie);
+  // console.log("cookies form page.tsx", userCookie);
   const loggedInUser = await decode({
     token: userCookie?.value!,
     salt: userCookie?.name!,

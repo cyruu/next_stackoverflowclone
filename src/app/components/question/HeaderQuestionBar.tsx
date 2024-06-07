@@ -50,9 +50,9 @@ const HeaderQuestionBar = ({
     // }
   }
   return (
-    <div className="px-7 mb-16  sm:p-0">
+    <div className="px-7 mb-7 sm:p-0 sm:mb-10">
       {/* text and button */}
-      <div className="flex justify-between mt-5 ">
+      <div className="flex justify-between sm:mt-5 ">
         <header>
           <Typography variant="h5">All Quesitons</Typography>
         </header>
