@@ -22,7 +22,7 @@ const Dropdown = () => {
   const loggedInUser = useSelector((state: any) => state.loggedInUser);
 
   return (
-    <div>
+    <div className="">
       {/* <div className="dropdownLinks absolute top-20 bg-white w-44"> */}
       <button
         onFocus={() => {
@@ -31,7 +31,7 @@ const Dropdown = () => {
         onBlur={() => {
           setTimeout(() => {
             setShowdropdown(false);
-          }, 500);
+          }, 100);
         }}
       >
         <MenuIcon className="mx-4 cursor-pointer" sx={{ fontSize: "1.8rem" }} />

@@ -31,7 +31,6 @@ const ProfileOptions = () => {
 
   return (
     <div className="absolute top-16 left-[-20px] z-10 border border-gray-200 w-36">
-      <ToastContainer />
       <Paper>
         <List className="  m-0 p-0">
           <Link href="/profile">

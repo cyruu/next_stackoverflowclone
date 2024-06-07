@@ -40,7 +40,7 @@ const QuestionBar = ({ searchTerm }: any) => {
   }
   useEffect(() => {
     getInitialQuestions(page);
-  }, [page, filterMode]);
+  }, [page, filterMode, searchTerm]);
 
   const handlePageChange = (event: any, value: any) => {
     setPage(value);

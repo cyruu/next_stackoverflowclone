@@ -94,7 +94,12 @@ const Navbar = () => {
         <ToastContainer />
         {showBurger ? <Dropdown /> : ""}
         <Link href="/">
-          <Image src={queryLogo} className="w-28 sm:w-32" alt={""} />
+          <Image
+            src={queryLogo}
+            className="w-28 sm:w-32"
+            alt={""}
+            priority={true}
+          />
         </Link>
       </div>
 
@@ -127,7 +132,7 @@ const Navbar = () => {
             onBlur={() => {
               setTimeout(() => {
                 setShowProfileOptions(false);
-              }, 500);
+              }, 100);
             }}
           >
             <List>
