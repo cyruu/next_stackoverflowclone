@@ -31,13 +31,13 @@ const ViewQuestion = ({ questionId }: any) => {
 
       setLoading(true);
       // await wait();
-      const res = await axios.post(
-        `http://localhost:3000/api/questions/getquestiondetail`,
-        { questionId }
-      );
-      // const res = await axios.get(
-      //   `${process.env.HOSTED_DOMAIN}/api/questions/getquestiondetail`
+      // const res = await axios.post(
+      //   `http://localhost:3000/api/questions/getquestiondetail`,
+      //   { questionId }
       // );
+      const res = await axios.get(
+        `${process.env.HOSTED_DOMAIN}/api/questions/getquestiondetail`
+      );
 
       if (res.data.statusCode == 200) {
         setQuestion(res.data.question);
