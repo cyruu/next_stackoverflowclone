@@ -8,14 +8,28 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { questionId } = reqBody;
-    const question = await Question.findOne({
-      _id: new mongoose.Types.ObjectId(String(questionId)),
-    });
+    // _id: new mongoose.Types.ObjectId(String(questionId)),
+    const question = await Question.aggregate([
+      {
+        $match: { _id: new mongoose.Types.ObjectId(String(questionId)) },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "userDetails",
+        },
+      },
+      {
+        $unwind: "$userDetails",
+      },
+    ]);
     if (question) {
       return NextResponse.json({
         msg: "Question api found",
         statusCode: 200,
-        question,
+        question: question[0],
       });
     }
     return NextResponse.json({

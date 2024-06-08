@@ -7,6 +7,7 @@ import theme from "@/materialUI/theme";
 import Navbar from "@/app/components/Navbar";
 import { store } from "./slices/store";
 import { Suspense } from "react";
+import Footer from "./components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 // export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({
           <body>
             <Navbar />
             {children}
+            <Footer />
           </body>
         </html>
       </ThemeProvider>

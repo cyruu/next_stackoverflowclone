@@ -60,7 +60,7 @@ const QuestionBar = ({ searchTerm }: any) => {
       />
 
       {loading ? (
-        <div>
+        <div className="min-h-[89vh]">
           {limit.map((ele) => (
             <SkeletonComponent key={ele} />
           ))}

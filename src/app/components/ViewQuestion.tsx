@@ -5,7 +5,8 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import React, { useEffect, useRef, useState } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import ViewQuestionSkeleton from "./ViewQuestionSkeleton";
-import Answers from "./askquestion/Answers";
+import Answers from "./answerquestion/Answers";
+import AnswerTheQuestion from "./answerquestion/AnswerTheQuestion";
 import { nord } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import axios from "axios";
 const ViewQuestion = ({ questionId }: any) => {
@@ -14,22 +15,20 @@ const ViewQuestion = ({ questionId }: any) => {
   const [mainCode, setMainCode] = useState("");
   const codeRef = useRef<any>();
   useEffect(() => {
-    if (!loading && question?.codeSnippets[0]?.codeMain) {
-      setMainCode(codeRef.current.innerText);
+    if (question && !loading) {
+      if (
+        Array.isArray(question.codeSnippets) &&
+        question.codeSnippets[0]?.codeMain
+      ) {
+        setMainCode(codeRef.current.innerText);
+      }
     }
-  }, [loading]);
-  async function wait() {
-    return new Promise((res, rej) => {
-      setTimeout(() => {
-        res("ok");
-      }, 1000);
-    });
-  }
+  }, [loading, question]);
+
   async function getQuestionDetail() {
     try {
-      console.log("getting questions");
-      const hostedDomain = process.env.HOSTED_DOMAIN;
-      // const hostedDomain = "http://localhost:3000";
+      // const hostedDomain = process.env.HOSTED_DOMAIN;
+      const hostedDomain = "http://localhost:3000";
       axios.defaults.baseURL = hostedDomain;
       setLoading(true);
       // await wait();
@@ -40,6 +39,7 @@ const ViewQuestion = ({ questionId }: any) => {
       const res = await axios.post(`/api/questions/getquestiondetail`, {
         questionId,
       });
+      console.log("ans res ", res.data);
 
       if (res.data.statusCode == 200) {
         setQuestion(res.data.question);
@@ -94,7 +94,7 @@ const ViewQuestion = ({ questionId }: any) => {
             </Typography>
 
             {/* codesnippets */}
-            {question?.codeSnippets.length > 0 ? (
+            {question?.codeSnippets?.length > 0 ? (
               <div className="codesnippet">
                 <div
                   dangerouslySetInnerHTML={{
@@ -142,6 +142,8 @@ const ViewQuestion = ({ questionId }: any) => {
       </div>
       {/* answers */}
       <Answers />
+      {/* answerthequestion */}
+      <AnswerTheQuestion />
     </div>
   );
 };

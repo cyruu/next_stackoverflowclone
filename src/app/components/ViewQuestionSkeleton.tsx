@@ -3,7 +3,7 @@ import React from "react";
 
 const ViewQuestionSkeleton = () => {
   return (
-    <div className="px-7 mt-7 ml-0 sm:p-0 sm:ml-7">
+    <div className="px-7 mt-7 ml-0 sm:p-0 min-h-[89vh] sm:ml-7">
       <div className="header">
         <Skeleton className="h-14" />
         <Skeleton className="w-20 h-4" />
