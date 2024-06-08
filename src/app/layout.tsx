@@ -23,7 +23,7 @@ export default function RootLayout({
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <html lang="en">
-          <body className={inter.className}>
+          <body>
             <Navbar />
             {children}
           </body>

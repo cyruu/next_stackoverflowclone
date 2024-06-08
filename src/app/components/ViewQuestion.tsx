@@ -9,20 +9,12 @@ import Answers from "./askquestion/Answers";
 import { nord } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import axios from "axios";
 const ViewQuestion = ({ questionId }: any) => {
-  const [tempCode, setTempCode] = useState(`<div>
-<div>&nbsp; const [tempCode, setTempCode] = useState("&lt;p&gt;const a=10&lt;/p&gt;&lt;p&gt;dsf sdf&lt;/p&gt;");</div>
-<div>&nbsp; const [mainCode, setMainCode] = useState("");</div>
-<div>&nbsp; const codeRef = useRef&lt;any&gt;();</div>
-<div>&nbsp; useEffect(() =&gt; {</div>
-<div>&nbsp; &nbsp; setMainCode(codeRef.current.innerText);</div>
-<div>&nbsp; }, [tempCode]);</div>
-</div> `);
-  const [question, setQuestion] = useState();
+  const [question, setQuestion] = useState<any>();
   const [loading, setLoading] = useState(true);
   const [mainCode, setMainCode] = useState("");
   const codeRef = useRef<any>();
   useEffect(() => {
-    if (!loading) {
+    if (!loading && question?.codeSnippets[0]?.codeMain) {
       setMainCode(codeRef.current.innerText);
     }
   }, [loading]);
@@ -38,15 +30,21 @@ const ViewQuestion = ({ questionId }: any) => {
       console.log("getting questions");
 
       setLoading(true);
-      await wait();
-      // const res = await axios.post(`api/questions/getquestiondetail`, {
-      //   questionId
-      // });
-      // if (res.data.statusCode == 200) {
-      //   setLoading(false);
-      // }
-      // console.log("view question response", res);
+      // await wait();
+      const res = await axios.post(
+        `http://localhost:3000/api/questions/getquestiondetail`,
+        { questionId }
+      );
+      // const res = await axios.get(
+      //   `${process.env.HOSTED_DOMAIN}/api/questions/getquestiondetail`
+      // );
+
+      if (res.data.statusCode == 200) {
+        setQuestion(res.data.question);
+        setLoading(false);
+      }
       setLoading(false);
+      console.log("view question response", res);
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +60,7 @@ const ViewQuestion = ({ questionId }: any) => {
       <div className="header">
         <div className="title">
           <Typography className="text-[1.6rem] sm:text-[2rem]">
-            What is react lorem50
+            {question?.title}
           </Typography>
         </div>
         <div className="info mt-2 mb-3">
@@ -90,41 +88,39 @@ const ViewQuestion = ({ questionId }: any) => {
         <div className="info w-[85%] sm:w-full">
           <div className="details">
             <Typography className="text-sm mb-4 sm:text-md">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Reprehenderit tenetur assumenda molestias natus nam deleniti porro
-              iste sint voluptate voluptatum minima ratione ad commodi quam
-              eligendi ullam molestiae, obcaecati odio. Est alias incidunt
-              maxime non maiores? Velit, autem ipsa!
+              {question?.details}
             </Typography>
 
             {/* codesnippets */}
-            <div className="codesnippet">
-              <div
-                dangerouslySetInnerHTML={{ __html: tempCode }}
-                ref={codeRef}
-                className="hidden"
-              ></div>
-              <div className="codesnippetdetail">
-                <Typography className="text-sm mb-4 sm:text-md">
-                  luptatum minima ratione ad commodi quam eligendi ullam
-                  molestiae, obcaecati odio. Est alias incidunt maxime non
-                  maiores? Velit, autem ipsa!
-                </Typography>
+            {question?.codeSnippets.length > 0 ? (
+              <div className="codesnippet">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: question?.codeSnippets[0].codeMain,
+                  }}
+                  ref={codeRef}
+                  className="hidden"
+                ></div>
+                <div className="codesnippetdetail">
+                  <Typography className="text-sm mb-4 sm:text-md">
+                    {question?.expect}
+                  </Typography>
+                </div>
+                <div className="codesnippetcode mb-4">
+                  <SyntaxHighlighter
+                    language="javascript"
+                    style={nord}
+                    className="w-[255px] text-xs max-h-72 rounded-lg sm:w-full"
+                  >
+                    {mainCode}
+                  </SyntaxHighlighter>
+                </div>
               </div>
-              <div className="codesnippetcode mb-4">
-                <SyntaxHighlighter
-                  language="javascript"
-                  style={nord}
-                  className="w-[255px] text-xs max-h-72 rounded-lg sm:w-full"
-                >
-                  {mainCode}
-                </SyntaxHighlighter>
-              </div>
-            </div>
+            ) : (
+              ""
+            )}
             <Typography className="text-sm mb-4 sm:text-md">
-              luptatum minima ratione ad commodi quam eligendi ullam molestiae,
-              obcaecati odio. Est alias incidunt maxime non maiores? Velit,
-              autem ipsa!
+              {question?.expect}
             </Typography>
           </div>
           <div className="info-footer flex flex-col items-end mt-2">
