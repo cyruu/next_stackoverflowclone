@@ -58,12 +58,12 @@ const Navbar = () => {
   // };
   async function getLoggedInUser() {
     try {
-      const res = await axios.get(
-        `http://localhost:3000/api/users/getLoggedInUser`
-      );
       // const res = await axios.get(
-      //   `${process.env.HOSTED_DOMAIN}/api/users/getLoggedInUser`
+      //   `http://localhost:3000/api/users/getLoggedInUser`
       // );
+      const res = await axios.get(
+        `${process.env.HOSTED_DOMAIN}/api/users/getLoggedInUser`
+      );
       const user = res.data.loggedInUser;
       // setCookieLoggedInUser(user);
       dis(setLoggedInUser({ loggedInUser: user }));
