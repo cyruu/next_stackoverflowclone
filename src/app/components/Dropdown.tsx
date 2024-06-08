@@ -38,7 +38,7 @@ const Dropdown = () => {
       </button>
       {showDropdown ? (
         <List
-          className="w-44 absolute top-26 p-0 border border-gray-200 z-10 sm:top-14 "
+          className="w-44 absolute top-14 p-0 border border-gray-200 z-10 sm:top-14 "
           component="nav"
         >
           <Paper>

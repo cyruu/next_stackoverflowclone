@@ -12,14 +12,14 @@ const Questions = () => {
 
   return (
     // <div className="questions grid">
-    <Grid container>
+    <Grid container className="sm:ml-5">
       <Grid item sm={2} className="hidden sm:flex">
         <LeftSideBar />
       </Grid>
-      <Grid item xs={12} sm={7} className="">
+      <Grid item xs={12} sm={6} className="mt-8 sm:mt-2">
         <QuestionBar />
       </Grid>
-      <Grid item sm={3} className="hidden sm:flex">
+      <Grid item sm={2} className="hidden sm:flex">
         <RightSideBar />
       </Grid>
     </Grid>

@@ -14,21 +14,11 @@ const ViewQuestion = ({ questionId }: any) => {
   const [loading, setLoading] = useState(true);
   const [mainCode, setMainCode] = useState("");
   const codeRef = useRef<any>();
-  useEffect(() => {
-    if (question && !loading) {
-      if (
-        Array.isArray(question.codeSnippets) &&
-        question.codeSnippets[0]?.codeMain
-      ) {
-        setMainCode(codeRef.current.innerText);
-      }
-    }
-  }, [loading, question]);
 
   async function getQuestionDetail() {
     try {
-      // const hostedDomain = process.env.HOSTED_DOMAIN;
-      const hostedDomain = "http://localhost:3000";
+      const hostedDomain = process.env.HOSTED_DOMAIN;
+      // const hostedDomain = "http://localhost:3000";
       axios.defaults.baseURL = hostedDomain;
       setLoading(true);
       // await wait();
@@ -87,7 +77,7 @@ const ViewQuestion = ({ questionId }: any) => {
             </button>
           </div>
         </div>
-        <div className="info w-[85%] sm:w-full">
+        <div className="info w-[85%] sm:w-full ">
           <div className="details">
             <Typography className="text-sm mb-4 sm:text-md">
               {question?.details}
@@ -101,7 +91,8 @@ const ViewQuestion = ({ questionId }: any) => {
                     __html: question?.codeSnippets[0].codeMain,
                   }}
                   ref={codeRef}
-                  className="hidden"
+                  className="h-0 opacity-0"
+                  // className="hidden"
                 ></div>
                 <div className="codesnippetdetail">
                   <Typography className="text-sm mb-4 sm:text-md">
@@ -114,7 +105,13 @@ const ViewQuestion = ({ questionId }: any) => {
                     style={nord}
                     className="w-[255px] text-xs max-h-72 rounded-lg sm:w-full"
                   >
-                    {mainCode}
+                    {question &&
+                    !loading &&
+                    Array.isArray(question.codeSnippets) &&
+                    question.codeSnippets[0]?.codeMain &&
+                    codeRef?.current
+                      ? codeRef.current.innerText
+                      : ""}
                   </SyntaxHighlighter>
                 </div>
               </div>

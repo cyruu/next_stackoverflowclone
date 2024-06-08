@@ -64,7 +64,7 @@ const AskQuestion = () => {
   };
 
   return (
-    <div className=" w-[93%] sm:w-2/3 mx-auto my-9">
+    <div className=" w-[93%] sm:w-2/3 mx-auto my-7">
       <ToastContainer />
       <form>
         <AskQuestionHeader />

@@ -21,33 +21,10 @@ const HeaderQuestionBar = ({
   function getNewQuestions() {
     setFilterMode("newest");
     setPage(1);
-
-    // setLoading(true);
-
-    // const res = await axios.post(`api/questions/getquestions`, {
-    //   pageNo: 1,
-    //   // zeroVotes: true,
-    // });
-    // if (res.data.statusCode == 200) {
-    //   setTotalPages(res.data.totalPages);
-    //   setQuestions(res.data.questions);
-    //   setLoading(false);
-    // }
   }
   function getUnansweredQuestions() {
     setFilterMode("unanswered");
     setPage(1);
-
-    // setLoading(true);
-    // const res = await axios.post(`api/questions/getquestions`, {
-    //   pageNo: 1,
-    //   zeroVotes: true,
-    // });
-    // if (res.data.statusCode == 200) {
-    //   setTotalPages(res.data.totalPages);
-    //   setQuestions(res.data.questions);
-    //   setLoading(false);
-    // }
   }
   return (
     <div className="px-7 mb-7 sm:p-0 sm:mb-10">
