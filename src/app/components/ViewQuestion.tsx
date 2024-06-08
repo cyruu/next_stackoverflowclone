@@ -28,16 +28,18 @@ const ViewQuestion = ({ questionId }: any) => {
   async function getQuestionDetail() {
     try {
       console.log("getting questions");
-
+      const hostedDomain = process.env.HOSTED_DOMAIN;
+      // const hostedDomain = "http://localhost:3000";
+      axios.defaults.baseURL = hostedDomain;
       setLoading(true);
       // await wait();
       // const res = await axios.post(
       //   `http://localhost:3000/api/questions/getquestiondetail`,
       //   { questionId }
       // );
-      const res = await axios.get(
-        `${process.env.HOSTED_DOMAIN}/api/questions/getquestiondetail`
-      );
+      const res = await axios.post(`/api/questions/getquestiondetail`, {
+        questionId,
+      });
 
       if (res.data.statusCode == 200) {
         setQuestion(res.data.question);
