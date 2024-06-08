@@ -10,10 +10,10 @@ const QuestionId = ({ params }: any) => {
         <Grid item sm={2} className="hidden sm:flex">
           <LeftSideBar />
         </Grid>
-        <Grid item xs={12} sm={7} className="">
-          <ViewQuestion />
+        <Grid item xs={12} sm={6} className="">
+          <ViewQuestion questionId={params.questionid} />
         </Grid>
-        <Grid item sm={3} className="hidden sm:flex">
+        <Grid item sm={5} className="hidden sm:flex">
           <RightSideBar />
         </Grid>
       </Grid>

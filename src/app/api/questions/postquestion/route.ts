@@ -7,12 +7,19 @@ connect();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { title, details, expect, userId } = reqBody;
+    const {
+      title,
+      details,
+      expect,
+      codesnippetdetail,
+      codesnippetcode,
+      userId,
+    } = reqBody;
     // get userId by searching from email
     // const user = await User.findOne({ email: userEmail });
 
     // _id is object id
-    const newQuestion = new Question({
+    const questionData: any = {
       userId,
       title,
       details,
@@ -20,7 +27,17 @@ export async function POST(request: NextRequest) {
       votes: 0,
       ansCount: 0,
       createdAt: Date.now(),
-    });
+    };
+
+    if (codesnippetdetail || codesnippetcode) {
+      questionData.codeSnippets = [
+        {
+          codeDetail: codesnippetdetail,
+          codeMain: codesnippetcode,
+        },
+      ];
+    }
+    const newQuestion = new Question(questionData);
     const savedQuestion = await newQuestion.save();
     // when send response injson format is converts to string
     if (savedQuestion) {

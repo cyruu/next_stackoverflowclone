@@ -10,7 +10,7 @@ import { LoadingButton } from "@mui/lab";
 import axios from "axios";
 import { notify } from "../helpers/notify";
 import { ToastContainer } from "react-toastify";
-
+import CodeSnippet from "../components/askquestion/CodeSnippet";
 import { useSelector } from "react-redux";
 
 //style
@@ -27,7 +27,7 @@ const style = {
   boxShadow: 24,
 };
 const AskQuestion = () => {
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState, control } = useForm();
   const loggedInUser = useSelector((state: any) => state.loggedInUser);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -38,11 +38,14 @@ const AskQuestion = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      const { title, details, expect } = data;
+      const { title, details, expect, codesnippetdetail, codesnippetcode } =
+        data;
       const postData = {
         title,
         details,
         expect,
+        codesnippetdetail,
+        codesnippetcode,
         userId: loggedInUser.userId,
       };
       setLoading(true);
@@ -89,7 +92,14 @@ const AskQuestion = () => {
           registerName="expect"
           errors={errors}
         />
-
+        <CodeSnippet
+          register={register}
+          className={inputStyle}
+          type="text"
+          // registerName="codesnippet"
+          errors={errors}
+          control={control}
+        />
         <Button onClick={handleOpen} variant="contained" disableElevation>
           Post Question
         </Button>

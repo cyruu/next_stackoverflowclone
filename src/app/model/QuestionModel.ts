@@ -16,6 +16,16 @@ const questionSchema = new mongoose.Schema({
   expect: {
     type: String,
   },
+  codeSnippets: [
+    {
+      codeDetail: {
+        type: String,
+      },
+      codeMain: {
+        type: String,
+      },
+    },
+  ],
   createdAt: Date,
   ansCount: Number,
   votes: Number,

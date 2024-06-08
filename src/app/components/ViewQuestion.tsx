@@ -1,14 +1,69 @@
+"use client";
 import { Divider, Typography } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import ViewQuestionSkeleton from "./ViewQuestionSkeleton";
+import Answers from "./askquestion/Answers";
+import { nord } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import axios from "axios";
+const ViewQuestion = ({ questionId }: any) => {
+  const [tempCode, setTempCode] = useState(`<div>
+<div>&nbsp; const [tempCode, setTempCode] = useState("&lt;p&gt;const a=10&lt;/p&gt;&lt;p&gt;dsf sdf&lt;/p&gt;");</div>
+<div>&nbsp; const [mainCode, setMainCode] = useState("");</div>
+<div>&nbsp; const codeRef = useRef&lt;any&gt;();</div>
+<div>&nbsp; useEffect(() =&gt; {</div>
+<div>&nbsp; &nbsp; setMainCode(codeRef.current.innerText);</div>
+<div>&nbsp; }, [tempCode]);</div>
+</div> `);
+  const [question, setQuestion] = useState();
+  const [loading, setLoading] = useState(true);
+  const [mainCode, setMainCode] = useState("");
+  const codeRef = useRef<any>();
+  useEffect(() => {
+    if (!loading) {
+      setMainCode(codeRef.current.innerText);
+    }
+  }, [loading]);
+  async function wait() {
+    return new Promise((res, rej) => {
+      setTimeout(() => {
+        res("ok");
+      }, 1000);
+    });
+  }
+  async function getQuestionDetail() {
+    try {
+      console.log("getting questions");
 
-const ViewQuestion = () => {
+      setLoading(true);
+      await wait();
+      // const res = await axios.post(`api/questions/getquestiondetail`, {
+      //   questionId
+      // });
+      // if (res.data.statusCode == 200) {
+      //   setLoading(false);
+      // }
+      // console.log("view question response", res);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    getQuestionDetail();
+  }, []);
+  if (loading) {
+    return <ViewQuestionSkeleton />;
+  }
   return (
     <div className="px-7 ml-0 mt-5 sm:p-0 sm:ml-7 sm:mt-7">
       <div className="header">
         <div className="title">
-          <Typography variant="h5">What is react lorem50</Typography>
+          <Typography className="text-[1.6rem] sm:text-[2rem]">
+            What is react lorem50
+          </Typography>
         </div>
         <div className="info mt-2 mb-3">
           <Typography className="text-gray-400 text-xs">Asked today</Typography>
@@ -32,22 +87,47 @@ const ViewQuestion = () => {
             </button>
           </div>
         </div>
-        <div className="info">
+        <div className="info w-[85%] sm:w-full">
           <div className="details">
-            <Typography className="text-sm mb-4">
+            <Typography className="text-sm mb-4 sm:text-md">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               Reprehenderit tenetur assumenda molestias natus nam deleniti porro
               iste sint voluptate voluptatum minima ratione ad commodi quam
               eligendi ullam molestiae, obcaecati odio. Est alias incidunt
               maxime non maiores? Velit, autem ipsa!
             </Typography>
-            <Typography className="text-sm mb-4">
+
+            {/* codesnippets */}
+            <div className="codesnippet">
+              <div
+                dangerouslySetInnerHTML={{ __html: tempCode }}
+                ref={codeRef}
+                className="hidden"
+              ></div>
+              <div className="codesnippetdetail">
+                <Typography className="text-sm mb-4 sm:text-md">
+                  luptatum minima ratione ad commodi quam eligendi ullam
+                  molestiae, obcaecati odio. Est alias incidunt maxime non
+                  maiores? Velit, autem ipsa!
+                </Typography>
+              </div>
+              <div className="codesnippetcode mb-4">
+                <SyntaxHighlighter
+                  language="javascript"
+                  style={nord}
+                  className="w-[255px] text-xs max-h-72 rounded-lg sm:w-full"
+                >
+                  {mainCode}
+                </SyntaxHighlighter>
+              </div>
+            </div>
+            <Typography className="text-sm mb-4 sm:text-md">
               luptatum minima ratione ad commodi quam eligendi ullam molestiae,
               obcaecati odio. Est alias incidunt maxime non maiores? Velit,
               autem ipsa!
             </Typography>
           </div>
-          <div className="info-footer flex flex-col items-end mt-7">
+          <div className="info-footer flex flex-col items-end mt-2">
             <div className="user bg-blue-50 py-1.5 px-2 w-32 rounded-md">
               <Typography className="text-xs mb-1 text-gray-500">
                 asked today
@@ -62,7 +142,8 @@ const ViewQuestion = () => {
           </div>
         </div>
       </div>
-      <div className="answers"></div>
+      {/* answers */}
+      <Answers />
     </div>
   );
 };
