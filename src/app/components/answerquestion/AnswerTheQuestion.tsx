@@ -6,6 +6,8 @@ import React, { useState } from "react";
 import { notify } from "@/app/helpers/notify";
 import { ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import axios from "axios";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -16,7 +18,8 @@ const style = {
   color: "black",
   boxShadow: 24,
 };
-const AnswerTheQuestion = () => {
+const AnswerTheQuestion = ({ questionId }: any) => {
+  const loggedInUser = useSelector((state: any) => state.loggedInUser);
   const { register, handleSubmit, formState, control } = useForm();
   const { errors }: any = formState;
   const [open, setOpen] = useState(false);
@@ -27,9 +30,27 @@ const AnswerTheQuestion = () => {
     //post answer
     // const queRes = await axios.post("/api/questions/postquestion", postData);
     // setLoading(true);
-    console.log(data);
-    notify("answer posted", 200);
-    // setLoading(false);
+    try {
+      const { answer } = data;
+
+      const hostedDomain = process.env.HOSTED_DOMAIN;
+      // const hostedDomain = "http://localhost:3000";
+      axios.defaults.baseURL = hostedDomain;
+      const ansRes = await axios.post(`/api/questions/postanswer`, {
+        answerDetail: answer,
+        username: loggedInUser.username,
+        questionId,
+      });
+      console.log("post answer res", ansRes.data);
+      notify(ansRes.data.msg, ansRes.data.statusCode);
+      if (ansRes.data.statusCode == 200) {
+        console.log("added answerrrrrrrrrrrrrr");
+      }
+
+      // setLoading(false);
+    } catch (error: any) {
+      console.log("answer submit error", error);
+    }
   };
   let className =
     "text-xs p-2 rounded-md outline-blue-400 w-full mt-3 border broder-gray-1000 border-2 sm:text-sm";
@@ -37,7 +58,7 @@ const AnswerTheQuestion = () => {
     className += " outline-red-600 border-red-600";
   }
   return (
-    <div>
+    <div className="mt-5">
       <ToastContainer />
       <Typography variant="h6">Your Answer</Typography>
       <form>

@@ -24,6 +24,14 @@ export async function POST(request: NextRequest) {
       {
         $unwind: "$userDetails",
       },
+      {
+        $lookup: {
+          from: "answers",
+          localField: "answers",
+          foreignField: "_id",
+          as: "answersData",
+        },
+      },
     ]);
     if (question) {
       return NextResponse.json({

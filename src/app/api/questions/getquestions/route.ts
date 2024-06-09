@@ -30,6 +30,7 @@ export async function POST(request: NextRequest) {
       {
         $unwind: "$user",
       },
+
       {
         $project: {
           "user.password": 0,

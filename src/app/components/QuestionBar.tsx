@@ -27,6 +27,7 @@ const QuestionBar = ({ searchTerm }: any) => {
         searchTerm,
         // zeroVotes: true,
       });
+
       if (res.data.statusCode == 200) {
         setTotalPages(res.data.totalPages);
         setQuestions(res.data.questions);

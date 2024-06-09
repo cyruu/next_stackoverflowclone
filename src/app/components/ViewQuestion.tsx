@@ -12,6 +12,11 @@ import axios from "axios";
 const ViewQuestion = ({ questionId }: any) => {
   const [question, setQuestion] = useState<any>();
   const [loading, setLoading] = useState(true);
+  const [year, setyear] = useState<any>();
+  const [month, setmonth] = useState<any>();
+  const [day, setday] = useState<any>();
+  const [hour, sethour] = useState<any>();
+  const [minutes, setminutes] = useState<any>();
   const [mainCode, setMainCode] = useState("");
   const codeRef = useRef<any>();
 
@@ -19,7 +24,7 @@ const ViewQuestion = ({ questionId }: any) => {
     try {
       const hostedDomain = process.env.HOSTED_DOMAIN;
       // const hostedDomain = "http://localhost:3000";
-      axios.defaults.baseURL = hostedDomain;
+      // axios.defaults.baseURL = hostedDomain;
       setLoading(true);
       // await wait();
       // const res = await axios.post(
@@ -29,14 +34,14 @@ const ViewQuestion = ({ questionId }: any) => {
       const res = await axios.post(`/api/questions/getquestiondetail`, {
         questionId,
       });
-      console.log("ans res ", res.data);
+      console.log("single ques response", res);
 
       if (res.data.statusCode == 200) {
         setQuestion(res.data.question);
         setLoading(false);
       }
       setLoading(false);
-      console.log("view question response", res);
+      console.log("view question response", res.data);
     } catch (error) {
       console.log(error);
     }
@@ -44,6 +49,16 @@ const ViewQuestion = ({ questionId }: any) => {
   useEffect(() => {
     getQuestionDetail();
   }, []);
+  useEffect(() => {
+    if (question) {
+      const date = new Date(question.createdAt);
+      setyear(date.getFullYear());
+      setmonth(date.getMonth());
+      setday(date.getDay());
+      sethour(date.getHours());
+      setminutes(date.getMinutes());
+    }
+  }, [loading]);
   if (loading) {
     return <ViewQuestionSkeleton />;
   }
@@ -56,11 +71,13 @@ const ViewQuestion = ({ questionId }: any) => {
           </Typography>
         </div>
         <div className="info mt-2 mb-3">
-          <Typography className="text-gray-400 text-xs">Asked today</Typography>
+          <Typography className="text-gray-400 text-xs">
+            asked {year}/{month}/{day} at {hour}:{minutes}
+          </Typography>
         </div>
         <Divider />
       </div>
-      <div className="content mt-5 flex">
+      <div className="content mt-5 flex mb-5">
         <div className="votes pr-3 sm:pr-5 ">
           <div className="voteitems flex flex-col items-center">
             <button className="voteicon border border-gray-300 p-1 rounded-full">
@@ -91,7 +108,7 @@ const ViewQuestion = ({ questionId }: any) => {
                     __html: question?.codeSnippets[0].codeMain,
                   }}
                   ref={codeRef}
-                  className="h-0 opacity-0"
+                  className="absolute opacity-0 pointer-events-none"
                   // className="hidden"
                 ></div>
                 <div className="codesnippetdetail">
@@ -123,24 +140,27 @@ const ViewQuestion = ({ questionId }: any) => {
             </Typography>
           </div>
           <div className="info-footer flex flex-col items-end mt-2">
-            <div className="user bg-blue-50 py-1.5 px-2 w-32 rounded-md">
+            <div className="user bg-blue-50 py-1.5 px-2 w-40 rounded-md">
               <Typography className="text-xs mb-1 text-gray-500">
-                asked today
+                asked {year}/{month}/{day} at {hour}:{minutes}
               </Typography>
               <div className="userinfo flex items-center">
                 <div className="userpic mr-1 h-[25px] w-[25px] bg-blue-500 rounded-md flex items-center justify-center text-white ">
                   <Typography className="text-sm">C</Typography>
                 </div>
-                <Typography className="text-xs text-blue-600">Cyrus</Typography>
+                <Typography className="text-xs text-blue-600">
+                  {question.userDetails.username}
+                </Typography>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <Divider />
       {/* answers */}
-      <Answers />
+      <Answers question={question} />
       {/* answerthequestion */}
-      <AnswerTheQuestion />
+      <AnswerTheQuestion questionId={questionId} />
     </div>
   );
 };

@@ -26,6 +26,7 @@ export async function POST(request: NextRequest) {
       expect,
       votes: 0,
       ansCount: 0,
+      answers: [],
       createdAt: Date.now(),
     };
 

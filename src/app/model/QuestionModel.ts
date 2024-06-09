@@ -26,6 +26,8 @@ const questionSchema = new mongoose.Schema({
       },
     },
   ],
+  answers: [{ type: mongoose.Schema.Types.ObjectId }],
+
   createdAt: Date,
   ansCount: Number,
   votes: Number,

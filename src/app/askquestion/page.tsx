@@ -46,6 +46,7 @@ const AskQuestion = () => {
         expect,
         codesnippetdetail,
         codesnippetcode,
+
         userId: loggedInUser.userId,
       };
       setLoading(true);
