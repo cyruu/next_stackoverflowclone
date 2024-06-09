@@ -36,6 +36,7 @@ const AnswerTheQuestion = ({ questionId }: any) => {
       const hostedDomain = process.env.HOSTED_DOMAIN;
       // const hostedDomain = "http://localhost:3000";
       axios.defaults.baseURL = hostedDomain;
+      setLoading(true);
       const ansRes = await axios.post(`/api/questions/postanswer`, {
         answerDetail: answer,
         username: loggedInUser.username,
@@ -44,7 +45,11 @@ const AnswerTheQuestion = ({ questionId }: any) => {
       console.log("post answer res", ansRes.data);
       notify(ansRes.data.msg, ansRes.data.statusCode);
       if (ansRes.data.statusCode == 200) {
-        console.log("added answerrrrrrrrrrrrrr");
+        setLoading(false);
+        // console.log("added answerrrrrrrrrrrrrr");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       }
 
       // setLoading(false);
@@ -174,11 +179,11 @@ const AnswerTheQuestion = ({ questionId }: any) => {
                 disableElevation
                 variant="contained"
                 size="medium"
-                className="p-1 mr-3"
+                className="p-1 px-2 mr-3"
                 color="primary"
                 onClick={handleSubmit(onSubmit)}
               >
-                Post
+                Post Answer
               </Button>
             )}
             <Button

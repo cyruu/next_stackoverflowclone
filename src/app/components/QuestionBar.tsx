@@ -68,7 +68,7 @@ const QuestionBar = ({ searchTerm }: any) => {
           <PaginationSkeleton />
         </div>
       ) : questionsFound > 0 ? (
-        <>
+        <div className="min-h-[89vh]">
           <QuestionsList questions={questions} />
           <div className=" flex justify-center my-16">
             <Stack spacing={2} className="">
@@ -82,9 +82,9 @@ const QuestionBar = ({ searchTerm }: any) => {
               />
             </Stack>
           </div>
-        </>
+        </div>
       ) : (
-        <div className="text-center">No Result Found</div>
+        <div className="text-center min-h-[89vh]">No Result Found</div>
       )}
     </div>
   );

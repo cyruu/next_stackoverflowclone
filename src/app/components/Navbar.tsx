@@ -150,7 +150,7 @@ const Navbar = () => {
             <List>
               <ListItem className="p-0">
                 <div className="bg-blue-600 flex justify-center items-center mr-1.5 text-white h-[28px] w-[28px] rounded-full text-lg pb-1 sm:h-[30px] w-[30px] text-sm   ">
-                  {cookieLoggedInUser.username[0]}
+                  {cookieLoggedInUser.username[0].toUpperCase()}
                 </div>
                 <ListItemText
                   primary={

@@ -28,9 +28,10 @@ export async function POST(request: NextRequest) {
       question.answers.push(
         new mongoose.Types.ObjectId(String(savedAnswer._id))
       );
+      question.ansCount += 1;
       await question.save();
       return NextResponse.json({
-        msg: "Successfullly posted answer",
+        msg: "Answer posted.",
         statusCode: 200,
         question,
       });
