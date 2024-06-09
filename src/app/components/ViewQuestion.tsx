@@ -7,7 +7,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import ViewQuestionSkeleton from "./ViewQuestionSkeleton";
 import Answers from "./answerquestion/Answers";
 import AnswerTheQuestion from "./answerquestion/AnswerTheQuestion";
-import { nord } from "react-syntax-highlighter/dist/esm/styles/hljs";
+// import { coy } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import axios from "axios";
 const ViewQuestion = ({ questionId }: any) => {
   const [question, setQuestion] = useState<any>();
@@ -18,13 +18,16 @@ const ViewQuestion = ({ questionId }: any) => {
   const [hour, sethour] = useState<any>();
   const [minutes, setminutes] = useState<any>();
   const [mainCode, setMainCode] = useState("");
+  const [voteCount, setVoteCount] = useState(1);
   const codeRef = useRef<any>();
 
+  const hostedDomain = process.env.HOSTED_DOMAIN;
+  // const hostedDomain = "http://localhost:3000";
   async function getQuestionDetail() {
     try {
-      const hostedDomain = process.env.HOSTED_DOMAIN;
+      // const hostedDomain = process.env.HOSTED_DOMAIN;
       // const hostedDomain = "http://localhost:3000";
-      // axios.defaults.baseURL = hostedDomain;
+      axios.defaults.baseURL = hostedDomain;
       setLoading(true);
       // await wait();
       // const res = await axios.post(
@@ -57,6 +60,7 @@ const ViewQuestion = ({ questionId }: any) => {
       setday(date.getDay());
       sethour(date.getHours());
       setminutes(date.getMinutes());
+      setVoteCount(question.votes);
     }
   }, [loading]);
   if (loading) {
@@ -80,15 +84,32 @@ const ViewQuestion = ({ questionId }: any) => {
       <div className="content mt-5 flex mb-5">
         <div className="votes pr-3 sm:pr-5 ">
           <div className="voteitems flex flex-col items-center">
-            <button className="voteicon border border-gray-300 p-1 rounded-full">
+            <button
+              className="voteicon border border-gray-300 p-1 rounded-full"
+              onClick={async () => {
+                setVoteCount((prev: number) => prev + 1);
+                // const hostedDomain = process.env.HOSTED_DOMAIN;
+                // const hostedDomain = "http://localhost:3000";
+                axios.defaults.baseURL = hostedDomain;
+                const res = await axios.post(
+                  `${hostedDomain}/api/questions/voteup`,
+                  {
+                    questionId,
+                  }
+                );
+                if (res.data.statusCode == 200) {
+                  setVoteCount(res.data.votedQuestion.votes);
+                }
+              }}
+            >
               <PlayArrowIcon className="rotate-[-90deg]" />
             </button>
             <Typography variant="h6" className="my-1">
-              1
+              {voteCount}
             </Typography>
-            <button className="voteicon border border-gray-300 p-1 rounded-full">
+            {/* <button className="voteicon border border-gray-300 p-1 rounded-full">
               <PlayArrowIcon className="rotate-90" />
-            </button>
+            </button> */}
             <button className="saveicons">
               <BookmarkBorderIcon className="text-gray-400 mt-3" />
             </button>
@@ -108,7 +129,7 @@ const ViewQuestion = ({ questionId }: any) => {
                     __html: question?.codeSnippets[0].codeMain,
                   }}
                   ref={codeRef}
-                  className="absolute opacity-0 pointer-events-none"
+                  className="absolute text-xs opacity-0 w-1 overflow-x-hidden  pointer-events-none"
                   // className="hidden"
                 ></div>
                 <div className="codesnippetdetail">
@@ -119,8 +140,7 @@ const ViewQuestion = ({ questionId }: any) => {
                 <div className="codesnippetcode mb-4">
                   <SyntaxHighlighter
                     language="javascript"
-                    style={nord}
-                    className="w-[255px] text-xs max-h-72 rounded-lg sm:w-full"
+                    className="w-[255px] bg-red-400 text-xs max-h-72 rounded-lg overflow-x-hidden sm:w-full"
                   >
                     {question &&
                     !loading &&

@@ -23,11 +23,13 @@ export default function RootLayout({
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <html lang="en">
+        <html lang="en" className="">
           <body>
-            <Navbar />
-            {children}
-            <Footer />
+            <div className="">
+              <Navbar />
+              {children}
+              <Footer />
+            </div>
           </body>
         </html>
       </ThemeProvider>
