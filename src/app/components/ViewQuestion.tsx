@@ -22,6 +22,7 @@ const ViewQuestion = ({ questionId }: any) => {
   const codeRef = useRef<any>();
 
   const hostedDomain = process.env.HOSTED_DOMAIN;
+
   // const hostedDomain = "http://localhost:3000";
   async function getQuestionDetail() {
     try {
