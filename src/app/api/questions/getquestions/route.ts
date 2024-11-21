@@ -116,6 +116,8 @@ export async function POST(request: NextRequest) {
       questions,
     });
   } catch (error) {
+    console.log("getquestions eror", error);
+
     return NextResponse.json({
       msg: "Db error",
       statusCode: 404,

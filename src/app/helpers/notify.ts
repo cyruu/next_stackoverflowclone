@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 export const notify = (errmsg: String, statusCode: Number) =>
   toast(errmsg, {
     position: "top-center",
-    autoClose: statusCode == 200 ? false : 2500,
+    autoClose: 2500,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

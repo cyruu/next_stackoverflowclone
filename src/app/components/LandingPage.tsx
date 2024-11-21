@@ -1,10 +1,18 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import landing from "@/images/landing.jpg";
 import Image from "next/image";
 import { Button, Typography } from "@mui/material";
 import Link from "next/link";
+import axios from "axios";
 const LandingPage = () => {
+  async function testing() {
+    const res = await axios.get("/api/testing");
+    console.log("testing front end", res);
+  }
+  useEffect(() => {
+    testing();
+  }, []);
   //test
   return (
     <div className="h-[89vh] relative flex flex-col items-center justify-around sm:flex-row">

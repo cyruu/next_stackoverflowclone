@@ -78,7 +78,7 @@ const Login = () => {
           id="standard-basic"
           label="Email"
           variant="standard"
-          className="w-full mt-6"
+          className="w-full"
         />
         <p className="mr-auto text-xs m-0 text-red-700 mt-1">
           {errors.email?.message}

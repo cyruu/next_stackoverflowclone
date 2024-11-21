@@ -27,6 +27,7 @@ const QuestionBar = ({ searchTerm }: any) => {
         searchTerm,
         // zeroVotes: true,
       });
+      console.log("api respone", res);
 
       if (res.data.statusCode == 200) {
         setTotalPages(res.data.totalPages);

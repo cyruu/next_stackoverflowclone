@@ -37,6 +37,8 @@ const AskQuestion = () => {
   // console.log("logged in resux user", loggedInUser);
 
   const onSubmit = async (data: any) => {
+    console.log("asking question");
+
     try {
       const { title, details, expect, codesnippetdetail, codesnippetcode } =
         data;
