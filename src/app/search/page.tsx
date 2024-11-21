@@ -4,11 +4,10 @@ import { Grid } from "@mui/material";
 import LeftSideBar from "@/app/components/LeftSideBar";
 import RightSideBar from "@/app/components/RightSideBar";
 import QuestionBar from "@/app/components/QuestionBar";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
-const SearchTerm = () => {
-  let searchParams = useSearchParams();
-  const searchTerm = searchParams.get("q");
+const SearchTerm = ({ searchParams }: any) => {
+  const searchTerm = searchParams.q;
 
   return (
     <>
