@@ -21,7 +21,7 @@ const style = {
 };
 const AnswerTheQuestion = ({ questionId }: any) => {
   const loggedInUser = useSelector((state: any) => state.loggedInUser);
-  console.log("post answer", loggedInUser);
+  // console.log("post answer", loggedInUser);
 
   const { register, handleSubmit, formState, control } = useForm();
   const { errors }: any = formState;
@@ -45,7 +45,7 @@ const AnswerTheQuestion = ({ questionId }: any) => {
         username: loggedInUser.username,
         questionId,
       });
-      console.log("post answer res", ansRes.data);
+      // console.log("post answer res", ansRes.data);
       notify(ansRes.data.msg, ansRes.data.statusCode);
       if (ansRes.data.statusCode == 200) {
         setLoading(false);

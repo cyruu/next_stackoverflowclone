@@ -27,7 +27,7 @@ const QuestionBar = ({ searchTerm }: any) => {
         searchTerm,
         // zeroVotes: true,
       });
-      console.log("api respone", res);
+      // console.log("api respone", res);
 
       if (res.data.statusCode == 200) {
         setTotalPages(res.data.totalPages);
@@ -35,7 +35,7 @@ const QuestionBar = ({ searchTerm }: any) => {
         setQuestionsFound(res.data.totalQuestions);
         setLoading(false);
       }
-      console.log("question response", res);
+      // console.log("question response", res);
     } catch (error) {
       console.log(error);
     }

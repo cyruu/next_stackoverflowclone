@@ -38,7 +38,7 @@ const ViewQuestion = ({ questionId }: any) => {
       const res = await axios.post(`/api/questions/getquestiondetail`, {
         questionId,
       });
-      console.log("single ques response", res);
+      // console.log("single ques response", res);
 
       if (res.data.statusCode == 200) {
         setQuestion(res.data.question);
