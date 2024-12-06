@@ -62,6 +62,9 @@ const Login = () => {
           Login
         </Typography>
 
+        <Typography className="mb-4 text-xs text-gray-400 md:text-sm">
+          Verify your email before logging in.
+        </Typography>
         <TextField
           // autoComplete="off"
           {...register("email", {

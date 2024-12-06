@@ -27,12 +27,12 @@ const LeftSideBar = () => {
             <Typography variant="body2">Questions</Typography>
           </ListItem>
         </Link>
-        <Link href="/saves">
+        {/* <Link href="/saves">
           <ListItem className=" w-40 hover:bg-gray-100 sm:pl-10 lg:pl-7 mt-10 ">
             <BookmarkIcon className="mr-2" />
             <Typography variant="body2">Saves</Typography>
           </ListItem>
-        </Link>
+        </Link> */}
       </List>
       <Divider orientation="vertical" />
     </div>

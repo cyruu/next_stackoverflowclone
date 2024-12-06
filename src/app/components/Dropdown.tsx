@@ -58,12 +58,12 @@ const Dropdown = () => {
             </Link>
             {/* <div className="mobileoptions sm:hidden"> */}
 
-            <Link href="/saves">
+            {/* <Link href="/saves">
               <ListItem className="p-1 hover:bg-gray-100">
                 <BookmarkIcon className="p-0 w-max mx-2" />
                 <ListItemText primary="Saves" />
               </ListItem>
-            </Link>
+            </Link> */}
             {/* </div> */}
 
             {/*  login logout */}

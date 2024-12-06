@@ -49,6 +49,9 @@ const Signup = () => {
         <Typography variant="h3" className="mb-8">
           Sign Up
         </Typography>
+        <Typography className="text-xs text-gray-400 md:text-sm">
+          Use real email to verify after signing up.
+        </Typography>
         <TextField
           autoComplete="off"
           {...register("username", {

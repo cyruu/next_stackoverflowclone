@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import Link from "next/link";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -20,6 +21,8 @@ const style = {
 };
 const AnswerTheQuestion = ({ questionId }: any) => {
   const loggedInUser = useSelector((state: any) => state.loggedInUser);
+  console.log("post answer", loggedInUser);
+
   const { register, handleSubmit, formState, control } = useForm();
   const { errors }: any = formState;
   const [open, setOpen] = useState(false);
@@ -35,7 +38,7 @@ const AnswerTheQuestion = ({ questionId }: any) => {
 
       const hostedDomain = process.env.HOSTED_DOMAIN;
       // const hostedDomain = "http://localhost:3000";
-      axios.defaults.baseURL = hostedDomain;
+      // axios.defaults.baseURL = hostedDomain;
       setLoading(true);
       const ansRes = await axios.post(`/api/questions/postanswer`, {
         answerDetail: answer,
@@ -119,14 +122,22 @@ const AnswerTheQuestion = ({ questionId }: any) => {
         >
           Post your answer
         </Button> */}
-        <Button
-          onClick={handleOpen}
-          variant="contained"
-          className="mt-4 mb-8"
-          disableElevation
-        >
-          Post your answer
-        </Button>
+        {loggedInUser ? (
+          <Button
+            onClick={handleOpen}
+            variant="contained"
+            className="mt-4 mb-8"
+            disableElevation
+          >
+            Post your answer
+          </Button>
+        ) : (
+          <Link href="/login">
+            <Button variant="contained" className="mt-4 mb-8" disableElevation>
+              Post your answer
+            </Button>
+          </Link>
+        )}
         <Modal
           open={open}
           onClose={handleClose}
@@ -159,6 +170,7 @@ const AnswerTheQuestion = ({ questionId }: any) => {
             >
               Are you sure you want to post this question?
             </Typography>
+
             {errors.answer ? (
               <Button variant="contained" disabled className="py-1 px-3 mr-3">
                 Invalid Form Data

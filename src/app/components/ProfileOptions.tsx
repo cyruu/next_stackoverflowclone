@@ -33,12 +33,12 @@ const ProfileOptions = () => {
     <div className="absolute top-16 left-[-20px] z-10 border border-gray-200 w-36 sm:left-[10px]">
       <Paper>
         <List className="  m-0 p-0">
-          <Link href="/profile">
+          {/* <Link href="/profile">
             <ListItem className="p-2 hover:bg-gray-100">
               <Person4Icon className="mx-2" />
               <Typography sx={{ fontSize: "..9rem" }}>Profile</Typography>
             </ListItem>
-          </Link>
+          </Link> */}
           <button
             className="cursor-pointer w-full p-0 hover:bg-gray-100"
             onClick={handleLogout}

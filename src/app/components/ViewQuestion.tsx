@@ -87,21 +87,22 @@ const ViewQuestion = ({ questionId }: any) => {
           <div className="voteitems flex flex-col items-center">
             <button
               className="voteicon border border-gray-300 p-1 rounded-full"
-              onClick={async () => {
-                setVoteCount((prev: number) => prev + 1);
-                // const hostedDomain = process.env.HOSTED_DOMAIN;
-                // const hostedDomain = "http://localhost:3000";
-                axios.defaults.baseURL = hostedDomain;
-                const res = await axios.post(
-                  `${hostedDomain}/api/questions/voteup`,
-                  {
-                    questionId,
-                  }
-                );
-                if (res.data.statusCode == 200) {
-                  setVoteCount(res.data.votedQuestion.votes);
-                }
-              }}
+              onClick={() => setVoteCount((prev) => prev + 1)}
+              // onClick={async () => {
+              //   setVoteCount((prev: number) => prev + 1);
+              //   // const hostedDomain = process.env.HOSTED_DOMAIN;
+              //   // const hostedDomain = "http://localhost:3000";
+              //   axios.defaults.baseURL = hostedDomain;
+              //   const res = await axios.post(
+              //     `${hostedDomain}/api/questions/voteup`,
+              //     {
+              //       questionId,
+              //     }
+              //   );
+              //   if (res.data.statusCode == 200) {
+              //     setVoteCount(res.data.votedQuestion.votes);
+              //   }
+              // }}
             >
               <PlayArrowIcon className="rotate-[-90deg]" />
             </button>
@@ -111,9 +112,9 @@ const ViewQuestion = ({ questionId }: any) => {
             {/* <button className="voteicon border border-gray-300 p-1 rounded-full">
               <PlayArrowIcon className="rotate-90" />
             </button> */}
-            <button className="saveicons">
+            {/* <button className="saveicons">
               <BookmarkBorderIcon className="text-gray-400 mt-3" />
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="info w-[85%] sm:w-full ">
